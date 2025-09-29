@@ -45,7 +45,7 @@ const SignIn = () => {
       </div>
 
       {/* Right Form Section */}
-      <div className="col-span-1 w-full bg-[#E1DAFC]  border-l-2 border-[#E1DAFC] rounded-none md:rounded-l-4xl relative flex items-center justify-center px-4 sm:px-6 md:px-10 py-8">
+      <div className="col-span-1 w-full bg-[#7548C7]  border-l-2 border-[#7548C7] rounded-none md:rounded-l-4xl relative flex items-center justify-center px-4 sm:px-6 md:px-10 py-8">
         {/* Corner Image */}
         <div className="h-[40px] w-[120px] sm:h-[55px] sm:w-[150px] right-2 top-2 md:right-0 md:top-0 absolute hidden md:block">
           <img className="h-full w-full" src={satyaKabir} alt="satyakabir" />
@@ -62,7 +62,7 @@ const SignIn = () => {
                 className="h-full w-full object-contain"
               />
             </div>
-            <h1 className="text-[#9475CA] text-xl sm:text-2xl font-bold text-center md:text-left mb-3">
+            <h1 className="text-[#FFFF] text-xl sm:text-2xl font-bold text-center md:text-left mb-3">
               Let's Connect
             </h1>
           </div>
@@ -75,7 +75,7 @@ const SignIn = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="email"
-                  className="text-[#58585A] mb-1 text-base sm:text-[0.8rem] font-semibold"
+                  className="text-[#FFFF] mb-1 text-base sm:text-[0.8rem] font-semibold"
                 >
                   User Id / E-Mail
                 </label>
@@ -93,7 +93,7 @@ const SignIn = () => {
               <div className="relative flex flex-col">
                 <label
                   htmlFor="password"
-                  className="text-[#58585A] mb-1 text-base sm:text-[0.8rem] font-semibold"
+                  className="text-[#FFFF] mb-1 text-base sm:text-[0.8rem] font-semibold"
                 >
                   Password
                 </label>
@@ -121,7 +121,7 @@ const SignIn = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="domain"
-                  className="text-[#58585A] mb-1 text-base sm:text-[0.8rem] font-semibold"
+                  className="text-[#FFFF] mb-1 text-base sm:text-[0.8rem] font-semibold"
                 >
                   Domain
                 </label>
@@ -140,14 +140,14 @@ const SignIn = () => {
             <Link to="/Dashboard">
               <button
               onClick={()=>toast.success('Sign-in Complete')}
-              className="w-full text-sm sm:text-base md:text-[0.8rem] py-3 sm:py-2 px-6 sm:px-10 cursor-pointer rounded-sm bg-[#9376CA] text-white font-semibold border border-[#9376CA] mt-5">
+              className="w-full text-[#FFFFF] text-sm sm:text-base md:text-[0.8rem] py-3 sm:py-2 px-6 sm:px-10 cursor-pointer rounded-sm bg-[#FACC16] font-semibold border border-[#FACC16] mt-5">
                 Sign In
               </button>
             </Link>
 
             {/* Forgot Password */}
             <Link to="/forgot-password">
-              <span className="flex justify-end mt-3 text-[#464040] text-xs sm:text-sm md:text-[0.8rem] opacity-80 cursor-pointer hover:underline">
+              <span className="flex justify-end mt-3 text-[#FFFF] text-xs sm:text-sm md:text-[0.8rem] opacity-80 cursor-pointer hover:underline">
                 Forgot Password?
               </span>
             </Link>

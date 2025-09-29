@@ -468,17 +468,17 @@ const SalaryAssigment = ({ onNext , onPrev }) => {
                  onClick={() => { onPrev() }}
 
         // className="w-1/5 bg-[#9376CA] rounded-sm text-white py-1 my-4"
-                className="w-1/5 border-2 border-[#9376CA] rounded-sm text-[0.7rem] cursor-pointer text-[#9376CA] py-1 my-4"
+                className="w-1/5 border-2 border-[#8629DF] rounded-sm text-[0.7rem] cursor-pointer text-[#8629DF] py-1 my-4"
 
 
         >
           Previous
         </button>
-        <button onClick={() => { onNext() }} className="w-1/5 bg-[#9376CA] cursor-pointer rounded-sm text-[0.7rem] text-white py-1 my-4">
+        <button onClick={() => { onNext() }} className="w-1/5 bg-[#8629DF] cursor-pointer rounded-sm text-[0.7rem] text-white py-1 my-4">
           Next
         </button>
         <button
-        className="w-1/5 border-2 border-[#9376CA] rounded-sm text-[0.7rem] text-[#9376CA] py-1 my-4">
+        className="w-1/5 border-2 border-[#8629DF] rounded-sm text-[0.7rem] text-[#9376CA] py-1 my-4">
           Reset
         </button>
         <button className="w-1/4 border-2 border-red-500 rounded-sm text-[0.7rem] text-red-500 py-1 my-4">

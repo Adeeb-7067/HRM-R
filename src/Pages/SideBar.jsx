@@ -77,8 +77,8 @@ const SideBar = () => {
             `flex items-center gap-4 text-[0.9rem] p-3 rounded-sm cursor-pointer w-full
          ${
            isActive 
-             ? "bg-[#9376CA] text-white"
-             : "text-[#111111] dark:text-white hover:bg-[#ebebeb] dark:hover:bg-gray-600 hover:text-[#9376CA]"
+             ? "bg-[#8629DF] text-white"
+             : "text-[#111111] dark:text-white hover:bg-[#ebebeb] dark:hover:bg-gray-600 hover:text-[#8629DF]"
          }`
           }
         >

@@ -45,7 +45,7 @@ const ForgotPassword = () => {
             />
 
             <Link to="/OTP-verification">
-              <button className="w-full px-5 py-4 cursor-pointer rounded-sm bg-[#9376CA] text-white font-semibold hover:bg-[#7e61b9] transition-all">
+              <button className="w-full px-5 py-4 cursor-pointer rounded-sm bg-[#8629DF] text-white font-semibold hover:bg-[#7e61b9] transition-all">
                 SUBMIT
               </button>
             </Link>

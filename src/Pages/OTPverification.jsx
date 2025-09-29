@@ -64,18 +64,18 @@ Enter the code we sent to you email
 </div>
 
                <Link to="/new-password">
-            <button className="w-full py-[18px] px-8 cursor-pointer rounded-lg bg-[#9376CA] text-white font-semibold hover:bg-[#7e61b9] transition-all">
+            <button className="w-full py-[18px] px-8 cursor-pointer rounded-lg bg-[#8629DF] text-white font-semibold hover:bg-[#7e61b9] transition-all">
               Verify
 
                
             </button>
                </Link>
            <div className='flex flex-col items-center gap-2 mt-6'>
-            <span className='text-[16px] text-[#9376CA] underline cursor-pointer'>
+            <span className='text-[16px] text-[#8629DF] underline cursor-pointer'>
                 Resend Code
             </span>
                  <Link to="/">
-             <span className='text-[16px] text-[#9376CA] underline cursor-pointer'>
+             <span className='text-[16px] text-[#8629DF] underline cursor-pointer'>
                 I remembered, i wanna log in.
                  
             </span>

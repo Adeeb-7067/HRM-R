@@ -692,12 +692,12 @@ const PersonalInfo = ({ onNext }) => {
 
           {/* Buttons */}
           <div className="flex justify-end mt-1 w-full gap-2  ">
-            <button className="bg-white dark:bg-[#E4E6EB]/10 border-2 text-[#9376CA] font-semibold text-[0.7rem] border-[#9376CA] py-1 rounded-sm w-1/5 my-3 ">
+            <button className="bg-white dark:bg-[#E4E6EB]/10 border-2 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/5 my-3 ">
               Reset
             </button>
             <button
               onClick={() => onNext()}
-              className="bg-[#9376CA] text-white font-semibold text-[0.7rem] w-1/5 py-1 my-3 cursor-pointer  rounded-sm"
+              className="bg-[#8629DF] text-white font-semibold text-[0.7rem] w-1/5 py-1 my-3 cursor-pointer  rounded-sm"
             >
               Next
             </button>
