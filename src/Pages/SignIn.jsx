@@ -47,24 +47,24 @@ const SignIn = () => {
       {/* Right Form Section */}
       <div className="col-span-1 w-full bg-[#7548C7]  border-l-2 border-[#7548C7] rounded-none md:rounded-l-4xl relative flex items-center justify-center px-4 sm:px-6 md:px-10 py-8">
         {/* Corner Image */}
-        <div className="h-[40px] w-[120px] sm:h-[55px] sm:w-[150px] right-2 top-2 md:right-0 md:top-0 absolute hidden md:block">
-          <img className="h-full w-full" src={satyaKabir} alt="satyakabir" />
+        <div className="h-[40px] w-[120px] sm:h-[65px] sm:w-[150px] right-3 top-3 md:right-1 md:top-1 absolute hidden md:block">
+          <img className="h-full w-full" src={RezigLogo} alt="satyakabir" />
         </div>
 
         {/* Form Container */} 
         <div className="w-full max-w-[330px] mb-4 flex flex-col justify-center">
-          <div>
+          <div className = 'flex justify-center'>
             {/* Logo */}
-            <div className="h-[60px] w-[140px] sm:h-[65px] sm:w-[160px]">
+            <div className="h-[60px] w-[140px] sm:h-[70px] sm:w-[160px]  ">
               <img
                 src={RezigLogo}
                 alt="Logo"
                 className="h-full w-full object-contain"
               />
             </div>
-            <h1 className="text-[#FFFF] text-xl sm:text-2xl font-bold text-center md:text-left mb-3">
+            {/* <h1 className="text-[#FFFF] text-base sm:text-xl font-bold text-center md:text-left mb-3">
               Let's Connect
-            </h1>
+            </h1> */}
           </div>
 
           {/* Title */}
@@ -85,7 +85,7 @@ const SignIn = () => {
                   value={email}
                   onChange={handleEmailChange}
                   placeholder="Enter your User Id / E-Mail"
-                  className="bg-white border border-[#9853F9] text-[#58585A] rounded-sm px-3 sm:px-4 py-2  w-full text-[0.7rem] sm:text-[0.7rem]"
+                  className="bg-white border border-[#9853F9] text-gray-600 rounded-sm px-3 sm:px-4 py-2  w-full text-[0.7rem] sm:text-[0.8rem] font-semibold"
                 />
               </div>
 
@@ -103,7 +103,7 @@ const SignIn = () => {
                   value={password}
                   onChange={handlePasswordChange}
                   placeholder="Enter your Password"
-                  className="bg-white border border-[#9853F9] text-[#58585A] rounded-sm px-3 sm:px-4 py-2  w-full text-sm sm:text-[0.7rem]"
+                  className="bg-white border border-[#9853F9] text-gray-600 rounded-sm px-3 sm:px-4 py-2  w-full text-sm sm:text-[0.8rem] font-semibold"
                 />
                 <span
                   className="absolute right-3 sm:right-4 top-8  cursor-pointer text-[#58585A] opacity-80"
@@ -131,7 +131,7 @@ const SignIn = () => {
                   value={domain}
                   onChange={handleDomainChange}
                   placeholder="Enter your Domain"
-                  className="bg-white border border-[#9853F9] text-[#58585A] rounded-sm px-3 sm:px-4 py-2  w-full text-sm sm:text-[0.7rem]"
+                  className="bg-white border border-[#9853F9] text-gray-600 rounded-sm px-3 sm:px-4 py-2  w-full text-sm sm:text-[0.8rem] font-semibold"
                 />
               </div>
             </div>
@@ -147,7 +147,7 @@ const SignIn = () => {
 
             {/* Forgot Password */}
             <Link to="/forgot-password">
-              <span className="flex justify-end mt-3 text-[#FFFF] text-xs sm:text-sm md:text-[0.8rem] opacity-80 cursor-pointer hover:underline">
+              <span className="flex justify-end mt-3 text-[#FFFF] text-xs sm:text-sm md:text-[0.8rem] opacity-80 cursor-pointer hover:underline font-semibold">
                 Forgot Password?
               </span>
             </Link>

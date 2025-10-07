@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css'; // import default styles
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
 const DatePickerField = ({ label, name, value, onChange }) => {
-  const [date, setDate] = useState(value ? new Date(value) : undefined);
+  const [date, setDate] = useState(value ? new Date(value) : null);
 
   useEffect(() => {
     if (date) {
       onChange({
-        target: { name, value: date.toISOString().split("T")[0] }, // keep YYYY-MM-DD
+        target: { name, value: date.toISOString().split("T")[0] }, // YYYY-MM-DD
       });
     }
   }, [date]);
@@ -39,7 +40,7 @@ const DatePickerField = ({ label, name, value, onChange }) => {
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 text-[0.7rem] dark:text-gray-400" />
             {date ? (
-              <span className="text-gray-900 dark:text-gray-100 text-[0.7rem]">
+              <span className="text-gray-900 dark:text-gray-400 text-[0.7rem]">
                 {format(date, "PPP")}
               </span>
             ) : (
@@ -52,12 +53,11 @@ const DatePickerField = ({ label, name, value, onChange }) => {
           align="start"
         >
           <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            initialFocus
-            className="rounded-lg"
-            captionLayout="dropdown"
+            onChange={setDate}
+            value={date}
+              prev2Label={null}
+  next2Label={null}
+            className="rounded-lg text-[0.7rem] dark:text-gray-800 "
           />
         </PopoverContent>
       </Popover>

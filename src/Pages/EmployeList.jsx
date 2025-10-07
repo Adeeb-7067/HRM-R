@@ -141,17 +141,17 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
         </button>
       </div>
 
-      <div className="rounded-xl mt-5 shadow drop-shadow-xs p-4 sm:p-4 border border-gray-200 dark:border-gray-600">
-        <h2 className="text-lg sm:text-[1.2rem] text-[#252C58] dark:text-gray-400 font-semibold mb-8">
+      <div className="rounded-sm mt-5 shadow drop-shadow-xs  border border-gray-200 dark:border-gray-600">
+        {/* <h2 className="text-lg sm:text-[1.2rem] text-[#252C58] dark:text-gray-400 font-semibold mb-8">
           List of Employee
-        </h2>
+        </h2> */}
        <div className="overflow-x-auto no-scrollbar  ">
           <div
-            className="text-[0.7rem] min-w-[1050px] sm:min-w-full sm:text-[0.8rem]  font-semibold text-black dark:text-gray-50 rounded-md border-y border-gray-100 dark:border-gray-700 bg-[#E4DCF1] dark:bg-gray-900 py-4 px-4 min-h-[44px] "
+            className="text-[0.7rem] min-w-[1050px] sm:min-w-full sm:text-[0.8rem]  font-semibold text-white dark:text-gray-50 rounded-t-md  dark:border-gray-700 bg-[#8629DF] dark:bg-gray-900 py-4 px-4 min-h-[44px] "
             style={{
               display: "grid",
               gridTemplateColumns:
-                "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 50px 50px 50px",
+                "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px",
               gap: "6px",
               alignItems: "center",
             }}
@@ -169,9 +169,8 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
             </div>
             <div>DOJ</div>
             <div>Reporting manager</div>
-            <div className="text-center">View</div>
-            <div className="text-center">Edit</div>
-            <div className="text-center">Delete</div>
+            <div className="text-center">Action</div>
+         
           </div>
 
           {/* Rows */}
@@ -182,7 +181,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
               style={{
                 display: "grid",
                 gridTemplateColumns:
-                  "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 50px 50px 50px",
+                  "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px ",
                 gap: "6px",
                 alignItems: "center",
               }}
@@ -217,6 +216,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
               <div>{emp.doj}</div>
               <div>{emp.manager}</div>
 
+<div className="flex justify-center gap-4 ">
 
       <Tooltip>
         <TooltipTrigger asChild>
@@ -259,6 +259,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
       </Tooltip>
 
       
+</div>
 
 
 
@@ -269,7 +270,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row justify-end items-center mt-6 text-xs sm:text-sm text-gray-600 gap-3 flex-wrap">
+        <div className="flex flex-col sm:flex-row justify-end items-center mt-6 mx-4 text-xs sm:text-sm text-gray-600 gap-3 flex-wrap">
           {/* Left: Pagination numbers */}
           <div className="flex items-center gap-2 flex-wrap">
             {/* Back button (disabled) */}
@@ -319,7 +320,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
           
         </div>
   {/* Footer */}
-        <div className="flex justify-end w-full text-black dark:text-gray-400 text-xs sm:text-sm mt-3">
+        <div className="flex justify-end w-full text-black dark:text-gray-400 text-xs sm:text-sm mt-3 p-4">
           1-50 of 125
         </div>
       

@@ -74,7 +74,7 @@ const SideBar = () => {
           key={item.name}
           to={item.path}
           className={({ isActive }) =>
-            `flex items-center gap-4 text-[0.9rem] p-3 rounded-sm cursor-pointer w-full
+            `flex items-center gap-4 text-[0.7rem] p-2 rounded-sm cursor-pointer w-full
          ${
            isActive 
              ? "bg-[#8629DF] text-white"

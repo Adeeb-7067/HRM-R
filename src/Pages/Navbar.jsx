@@ -4,6 +4,9 @@ import { CiMenuFries } from "react-icons/ci";
 import { LogOut } from "lucide-react";
 import { useTheme } from "./themeProvider";
 import { Button } from "@/components/ui/button";
+import RezigLogo from '../Assets/SigninLogo.png'
+import { HiMiniBars4 } from "react-icons/hi2";
+
 // shadcn/ui imports
 import {
   DropdownMenu,
@@ -72,18 +75,18 @@ if(theme ==='light'){
 
 
   return (
-    <div className="bg-[#FFFFFF] dark:bg-gray-900 shadow-md p-4 w-full h-[70px]">
-      <div className="flex flex-row justify-between items-center gap-4">
+    <div className="bg-[#FFFFFF] dark:bg-gray-900 shadow-md p-4 w-full h-[60px] dark:border dark:border-b-gray-700  ">
+      <div className="flex flex-row justify-between items-center gap-4 ">
         {/* Left */}
         <div className="flex items-center gap-4">
           <div className="h-[27px] w-[188px] ml-1 flex gap-4">
             <img
-              src={Dashboard}
+              src={RezigLogo}
               alt="DashBoard"
               className="h-full w-fit object-contain block"
             />
             <button onClick={onMenuClick} className="block cursor-pointer">
-              <CiMenuFries className="h-5 w-5 dark:text-white" />
+              <HiMiniBars4 className="h-5 w-5 dark:text-white" />
             </button>
           </div>
           <h1 className="text-sm md:text-xl font-semibold text-gray-800 dark:text-gray-100 hidden md:block">

@@ -14,7 +14,7 @@ const InputField = ({ label, type = "text", name, value, onChange, className = "
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-md px-4 py-1.5 ${className}`}
+      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-sm px-4 py-1.5 ${className}`}
       {...props}
     />
   </div>
@@ -60,7 +60,7 @@ const TextareaField = ({ label, name, value, onChange, className = "", ...props 
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white text-[.7rem] dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-4 py-2 ${className}`}
+      className={`w-full bg-white text-[.7rem] dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-sm px-4 py-2 ${className}`}
       {...props}
     />
   </div>
@@ -81,7 +81,7 @@ const CheckboxField = ({ label, name, checked, onChange, className = "" }) => (
 );
 const ToggleField = ({ label, name, value, onChange, className = "" }) => {
   return (
-    <div className={`flex items-center gap-3 py-2 ${className}`}>
+    <div className={`flex items-center justify-between  gap-3 mr-4 py-2 ${className}`}>
       <Label
         htmlFor={name}
         className="text-black dark:text-gray-50 text-[0.7rem] font-normal"

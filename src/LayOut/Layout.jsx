@@ -44,7 +44,7 @@ export default function Layout({ children }) {
       <div className="flex flex-1 overflow-hidden">
         <aside
           className={`hidden md:block bg-white dark:border-r dark:bg-gray-900 shadow-xl overflow-y-auto transition-all duration-300 ease-in-out ${
-            desktopOpen ? "w-60" : "w-0"
+            desktopOpen ? "w-45" : "w-0"
           }`}
           aria-hidden={!isDesktop}
         >
@@ -62,7 +62,7 @@ export default function Layout({ children }) {
               onClick={() => setMobileOpen(false)}
             />
             {/* Drawer */}
-            <aside className="relative w-60 bg-white dark:border-r  dark:bg-gray-900 shadow-xl h-full overflow-y-auto transform transition-transform duration-300 ease-in-out translate-x-0">
+            <aside className="relative w-45 bg-white dark:border-r  dark:bg-gray-900 shadow-xl h-full overflow-y-auto transform transition-transform duration-300 ease-in-out translate-x-0">
               <SideBar isCollapsed={false} />
             </aside>
           </div>

@@ -144,7 +144,7 @@ const DashBoard = () => {
       <div className=" h-[351px] drop-shadow-sm ">
         <div className="">
           {/* Chart Container */}
-          <div className="bg-white dark:bg-gray-800 rounded-4xl  p-3 drop-shadow-xl border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-md  p-3 drop-shadow-xl border border-gray-200 dark:border-gray-700">
             <h2 className="text-[1rem] font-bold dark:text-gray-400 text-[#333333] text-center mb-2">
               Employee Growth Graph
             </h2>
@@ -222,13 +222,17 @@ const DashBoard = () => {
   const StatsCard = ({ img, heading, data, color }) => {
     return (
       <div
-        className="w-full  md:w-[100%]  h-18 bg-white dark:bg-gray-800 border-t-4 rounded-lg drop-shadow-md p-4   transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+        className="w-full  md:w-[100%]   bg-white dark:bg-gray-800 border-t-4 rounded-lg drop-shadow-md p-4  h-25  transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
         style={{ borderTopColor: color }}
       >
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-4 w-full">
             <img src={img} alt={heading} className="w-8 h-8 mb-2" />
             <div className="">
+              <h4 className="text-[10px]  xl:text-[0.7rem]  text-[#464549] dark:text-gray-400 font-semibold line-clamp-1">
+                {heading}
+              </h4>
+              <p className="text-[0.9rem] text-[#9376CA] font-bold">{data}</p>
               <h4 className="text-[10px]  xl:text-[0.7rem]  text-[#464549] dark:text-gray-400 font-semibold line-clamp-1">
                 {heading}
               </h4>
@@ -288,35 +292,60 @@ const DashBoard = () => {
     );
   };
 
-  const Chart = () => (
-    <div className=" w-full h-[220px] xl:h-[202px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={attendanceData}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={CustomLabel}
-            outerRadius={100}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {attendanceData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-  );
+ const Chart = () => (
+  <div className="w-full h-[220px] xl:h-[202px]">
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={attendanceData}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={CustomLabel}
+          outerRadius={100}
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {attendanceData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Pie>
+        {/* Add Tooltip here */}
+      <Tooltip
+  formatter={(value, name, props) => [
+    `${value}`,
+    `${props.payload.name || props.payload.value}`,
+  ]}
+  contentStyle={{
+    backgroundColor: "#1F2937", // dark-gray background for modern look
+    color: "#F9FAFB", // light text for contrast
+    borderRadius: "8px",
+    padding: "8px 12px",
+    fontSize: "0.875rem", // slightly bigger
+    fontWeight: "500",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.15)", // subtle shadow
+    border: "1px solid #374151", // subtle border for depth
+    minWidth: "80px",
+    textAlign: "center",
+  }}
+  itemStyle={{
+    color: "#F9FAFB", // ensure item text is readable
+    margin: "2px 0",
+  }}
+/>
+
+      </PieChart>
+    </ResponsiveContainer>
+  </div>
+);
+
   const today = new Date();
   const formatted = `${today.getDate()}-${
     today.getMonth() + 1
   }-${today.getFullYear()}`;
 
   return (
-    <div >
+    <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4   ">
         <StatsCard
           img={Stat01}
@@ -369,7 +398,7 @@ const DashBoard = () => {
       </div>
 
       <div className="grid grid-cols-1  xl:grid-cols-3  gap-4 mt-6 ">
-        <div className="col-span-1 bg-[#FFFFFF] dark:bg-gray-800 xl:h-[322px]   mt-12 rounded-4xl drop-shadow-sm  border-gray-200 dark:border-gray-700 border p-5 md:px-12   ">
+        <div className="col-span-1 bg-[#FFFFFF] dark:bg-gray-800 xl:h-[322px]   mt-12 rounded-md drop-shadow-sm  border-gray-200 dark:border-gray-700 border p-5 md:px-12   ">
           <h1 className="text-center dark:text-gray-400 font-bold text-[1rem] mb-4">
             HR Analytics Overview
           </h1>
@@ -383,9 +412,9 @@ const DashBoard = () => {
         </div>
         <div className=" col-span-2  overflow-x-auto bg-[#FFFFFF] dark:bg-gray-800 mt-12 border border-gray-200 dark:border-gray-700 drop-shadow-md rounded-lg  lg:overflow-hidden lg:w-full">
           <table className="min-w-xl [@media(min-width:1440px)]:min-w-[700px] over-x-auto  w-full  text-sm text-left">
-            <thead className="bg-[#E4DCF1] dark:bg-gray-500 text-[14px] text-black py-[6px] px-[10px]  rounded-2xl  ">
+            <thead className="bg-[#8629DF] dark:bg-gray-500 text-[14px] text-white py-[6px] px-[10px]  rounded-t-2xl  ">
               <tr>
-                <th className="px-6 py-2 text-[0.7rem] font-medium text-center rounded-l-md">
+                <th className="px-6 py-2 text-[0.7rem] font-medium text-center ">
                   Employee Name
                 </th>
                 <th className="px-6 py-2 text-[0.7rem] font-medium text-center">
@@ -397,7 +426,7 @@ const DashBoard = () => {
                 <th className="px-6 py-2 text-[0.7rem] font-medium text-center">
                   Discipline
                 </th>
-                <th className="px-6 py-2 text-[0.7rem] font-medium text-center rounded-r-md">
+                <th className="px-6 py-2 text-[0.7rem] font-medium text-center ">
                   Daily Attendance
                 </th>
               </tr>
@@ -427,7 +456,7 @@ const DashBoard = () => {
                   </td>
                   <td className="p-2 text-center">
                     <button
-                      className={`px-10 w-full py-1 rounded-md text-center ${
+                      className={`px-10  w-[70%] py-1 rounded-md text-center ${
                         item.daily_attendance === "Present"
                           ? "text-[#34C759] bg-[#34C75933]"
                           : item.daily_attendance === "Leave"
@@ -451,31 +480,32 @@ const DashBoard = () => {
         <div className="col-span-1 ">
           <EmployeeGrowthChart />
         </div>
-        <div className="cols-span-1 mt-2 overflow-x-auto bg-white dark:bg-gray-800 drop-shadow-sm rounded-xl h-fit">
-        <div className="w-full text-[0.7rem] text-center rounded-xl     border border-gray-200 dark:border-gray-700   ">
-  <div className="grid grid-cols-3 bg-[#E4DCF1] dark:bg-gray-500 text-black font-medium rounded-lg">
-    <div className="px-6 py-2 rounded-l-sm">Month</div>
-    <div className="px-6 py-2">Department</div>
-    <div className="px-6 py-2 rounded-r-sm">No. of Employee</div>
-  </div>
+        <div className="cols-span-1  overflow-x-auto bg-white dark:bg-gray-800 drop-shadow-sm rounded-sm h-fit">
+          <div className="w-full text-[0.7rem] text-center rounded-sm     border border-gray-200 dark:border-gray-700   ">
+            <div className="grid grid-cols-3 bg-[#8629DF] dark:bg-gray-500 text-white font-medium rounded-t-sm">
+              <div className="px-6 py-2">Month</div>
+              <div className="px-6 py-2">Department</div>
+              <div className="px-6 py-2">No. of Employee</div>
+            </div>
 
-  {/* Body */}
-  <div className="dark:bg-gray-800">
-    {monthlyData.map((item) => (
-      <div
-        key={item.id}
-        className="grid grid-cols-3 text-center text-[#58585A] dark:text-gray-400  border-gray-200 dark:border-gray-700"
-      >
-        <div className="px-4 py-2 text-[0.7rem]">{item.name}</div>
-        <div className="px-4 py-2 text-[0.7rem]">{item.department}</div>
-        <div className="px-4 py-2 text-[0.7rem] text-[#34C759]">
-          {item.performance_score}
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-
+            {/* Body */}
+            <div className="dark:bg-gray-800">
+              {monthlyData.map((item) => (
+                <div
+                  key={item.id}
+                  className="grid grid-cols-3 text-center text-[#58585A] dark:text-gray-400  border-gray-200 dark:border-gray-700"
+                >
+                  <div className="px-4 py-2 text-[0.7rem]">{item.name}</div>
+                  <div className="px-4 py-2 text-[0.7rem]">
+                    {item.department}
+                  </div>
+                  <div className="px-4 py-2 text-[0.7rem] text-[#34C759]">
+                    {item.performance_score}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

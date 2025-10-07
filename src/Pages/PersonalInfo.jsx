@@ -14,7 +14,7 @@ const InputField = ({ label, type = "text", name, value, onChange, className = "
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-md px-4 py-1.5 ${className}`}
+      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-sm px-4 py-1.5 ${className}`}
       {...props}
     />
   </div>
@@ -60,7 +60,7 @@ const SearchInput = ({ label, name, value, onChange, icon: Icon }) => (
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full bg-white text-[0.7rem] dark:bg-gray-800 mb-2 border border-gray-300 dark:border-gray-600 rounded-md pl-3 pr-10 py-1.5  focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none"
+        className="w-full bg-white text-[0.7rem] dark:bg-gray-800 mb-2 border border-gray-300 dark:border-gray-600 rounded-sm pl-3 pr-10 py-1.5  focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none"
       />
       <Icon className="absolute right-3 top-1/3 -translate-y-1/2 text-black dark:text-white" />
     </div>

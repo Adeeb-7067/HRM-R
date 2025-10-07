@@ -12,7 +12,7 @@ const InputField = ({ label, type = "text", name, value, onChange, className = "
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-md px-4 py-1.5 ${className}`}
+      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-sm px-4 py-1.5 ${className}`}
       {...props}
     />
   </div>
