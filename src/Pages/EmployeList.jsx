@@ -108,35 +108,36 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
         </div>
       </div>
       <div className="grid grid-cols-2 md:flex  md:justify-around  gap-2 md:gap-2 w-full flex-wrap-reverse md:flex-nowrap">
-        <div className="flex gap-2  rounded-sm px-3 items-center shadow drop-shadow-xs border border-gray-300 dark:border-gray-500 dark:bg-gray-800 w-full md:w-[70%]  xl:h-[35px]">
-          <input
-            type="text"
-            placeholder="Search here"
-            onChange={(e) => setSearchQuery(e.target.value)}
+       <div className="flex gap-2 rounded-sm px-3 items-center shadow drop-shadow-xs border border-gray-300 dark:border-gray-500 dark:bg-gray-800 w-full md:w-[70%] xl:h-[35px] 
+  focus-within:border-[#9853F9] focus-within:border-2 focus-within:shadow-md transition-all">
+  <input
+    type="text"
+    placeholder="Search here"
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="px-3 py-2 w-full text-xs md:text-[0.8rem] outline-none bg-transparent"
+  />
+  <IoMdSearch className="w-5 h-5 text-gray-500" />
+</div>
 
-            className="px-3 py-2 w-full text-xs  md:text-[0.8rem] outline-none"
-          />
-          <IoMdSearch className="w-6 h-6" />
-        </div>
         <button
           onClick={() => {
             setOpen(true);
           }}
-          className="bg-[#8629DF] dark:bg-gray-800 dark:border dark:border-gray-500 text-white cursor-pointer text-xs md:text-[0.7rem] px-4 p-1 md:p-0  min-w-[50%]  md:min-w-[5rem]  rounded-sm flex items-center justify-center gap-1"
+          className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-xs md:text-[0.7rem] px-4 p-1 md:p-0  min-w-[50%]  md:min-w-[5rem]  rounded-sm flex items-center justify-center gap-1"
         >
           <HiAdjustmentsHorizontal className="md:w-4 md:h-4" />
           Filter
         </button>
         <button
-         className="bg-[#8629DF] dark:bg-gray-800 dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2 md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2"
+         className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2 md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2"
          >
-          <CiExport className="md:w-4 md:h-4" />
+          <CiImport className="md:w-4 md:h-4" />
           Bulk Export
         </button>
         <button
-         className="bg-[#8629DF] dark:bg-gray-800 dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2  md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2"
+         className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2  md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2"
          >
-          <CiImport className="md:w-4 md:h-4" />
+          <CiExport className="md:w-4 md:h-4" />
           Bulk Import
         </button>
       </div>
@@ -147,11 +148,11 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
         </h2> */}
        <div className="overflow-x-auto no-scrollbar  ">
           <div
-            className="text-[0.7rem] min-w-[1050px] sm:min-w-full sm:text-[0.8rem]  font-semibold text-white dark:text-gray-50 rounded-t-md  dark:border-gray-700 bg-[#8629DF] dark:bg-gray-900 py-4 px-4 min-h-[44px] "
+            className="text-[0.7rem] min-w-[1050px] sm:min-w-full sm:text-[0.8rem]  font-semibold text-white dark:text-gray-50 rounded-t-md  dark:border-gray-700 bg-[#8629DF] dark:bg-gray-900 py-1 px-4 min-h-[40px] "
             style={{
               display: "grid",
               gridTemplateColumns:
-                "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px",
+                " 60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px",
               gap: "6px",
               alignItems: "center",
             }}
@@ -177,11 +178,11 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
           {filterData.map((emp, index) => (
             <div
               key={index}
-              className="min-w-[1050px] sm:min-w-full  text-[0.7rem] sm:text-[0.7.2rem] py-3 px-3 border-b border-gray-100 dark:border-gray-700  dark:text-gray-400 dark:bg-[#A1A1AA]/5 "
+              className="min-w-[1050px] sm:min-w-full  text-[0.7rem] sm:text-[0.7.2rem] py-2 px-3 border-b border-gray-100 dark:border-gray-700  dark:text-gray-400 hover:bg-gray-200/30 dark:hover:bg-gray-500/30 dark:bg-[#A1A1AA]/5 "
               style={{
                 display: "grid",
                 gridTemplateColumns:
-                  "60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px ",
+                  " 60px 90px 1.5fr 1.5fr 1.5fr 1.2fr 1.6fr 100px ",
                 gap: "6px",
                 alignItems: "center",
               }}
@@ -250,7 +251,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
         
               <div className="flex justify-center cursor-pointer">
                 <Trash2
-                 className="h-4 w-4 text-black hover:text-gray-600 dark:text-white dark:hover:text-gray-400 transform transition-transform duration-300 hover:scale-120 hover:shadow-xl"/>       
+                 className="h-4 w-4 text-red-500 hover:text-gray-600 dark:text-red-500 dark:hover:text-gray-400 transform transition-transform duration-300 hover:scale-120 hover:shadow-xl"/>       
                        </div>
         </TooltipTrigger>
         <TooltipContent side="top">
@@ -274,7 +275,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
           {/* Left: Pagination numbers */}
           <div className="flex items-center gap-2 flex-wrap">
             {/* Back button (disabled) */}
-            <button className="px-3 py-1 border rounded border-gray-300 hover:bg-[#8629DF] hover:text-white">
+            <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               &lt; Back
             </button>
 
@@ -285,7 +286,7 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
                 className={`px-3 py-1 border rounded ${
                   num === 1
                     ? "bg-[#8629DF] text-white border-[#8629DF]"
-                    : "border-gray-300 hover:bg-[#9376CA] hover:text-white"
+                    : "border-[#8629DF] hover:bg-[#8629DF] hover:text-white"
                 }`}
               >
                 {num}
@@ -296,12 +297,12 @@ const filterData = employees.filter(item=>item.name.toLocaleLowerCase().includes
             <span className="px-2">...</span>
 
             {/* Last page */}
-            <button className="px-3 py-1 border rounded border-gray-300 hover:bg-[#9376CA] hover:text-white">
+            <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               25
             </button>
 
             {/* Next button */}
-            <button className="px-3 py-1 border rounded border-gray-300 hover:bg-[#9376CA] hover:text-white">
+            <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               Next &gt;
             </button>
           </div>

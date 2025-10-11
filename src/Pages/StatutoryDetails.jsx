@@ -3,29 +3,44 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
-
+// import { SelectField, Option } from '@/components/ui/SelectInput'
 // Reusable Input Component
 // Reusable Input Component
-const InputField = ({ label, type = "text", name, value, onChange, className = "", ...props }) => (
+const InputField = ({
+  label,
+  type = "text",
+  name,
+  value,
+  onChange,
+  className = "",
+  ...props
+}) => (
   <div>
-    <label className="block text-black dark:text-gray-50 text-[0.7rem] font-normal mb-1">{label}</label>
+    <label className="block text-gray-500 font-semibold dark:text-gray-50 text-[0.7rem]  mb-1">
+      {label}
+    </label>
     <input
       type={type}
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-sm px-4 py-1.5 ${className}`}
-      {...props}
+      className={`w-full h-7.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-white border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#9853F9] focus:ring-inset rounded-sm px-4 py-1.5 ${className}`}
     />
   </div>
 );
-
 // Reusable Select Component
-const SelectField = ({ label, name, value, onChange, children, className = "" }) => {
+const SelectField = ({
+  label,
+  name,
+  value,
+  onChange,
+  children,
+  className = "",
+}) => {
   return (
     <div className="w-full">
       {/* Label */}
-      <label className="block text-[0.7rem] font-normal text-black dark:text-gray-200 mb-1">
+      <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
         {label}
       </label>
 
@@ -35,13 +50,15 @@ const SelectField = ({ label, name, value, onChange, children, className = "" })
         value={value}
         onChange={onChange}
         className={cn(
-          "w-full px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
+          "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
           "bg-white dark:bg-gray-800",
           "border border-gray-300 dark:border-gray-700",
-          "text-gray-900 dark:text-gray-100",
+          "text-gray-600 dark:text-gray-100",
           "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
           "hover:border-gray-400 dark:hover:border-gray-500",
           "transition-all duration-200 ease-in-out",
+"dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
+
           className
         )}
       >
@@ -55,12 +72,12 @@ const SelectField = ({ label, name, value, onChange, children, className = "" })
 // Reusable Textarea Component
 const TextareaField = ({ label, name, value, onChange, className = "", ...props }) => (
   <div>
-    <label className="block text-black dark:text-gray-50 mt-8 text-[0.8rem] font-medium ">{label}</label>
+    <label className="block text-gray-600 dark:text-gray-50 mt-2 text-[0.8rem] font-medium ">{label}</label>
     <textarea
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white text-[.7rem] dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-sm px-4 py-2 ${className}`}
+      className={`w-full bg-white text-[.7rem] dark:bg-gray-800 border border-gray-300  focus:border-2 focus:border-[#9853F9] dark:border-gray-700 rounded-sm px-4 py-2 ${className}`}
       {...props}
     />
   </div>
@@ -68,7 +85,7 @@ const TextareaField = ({ label, name, value, onChange, className = "", ...props 
 
 // Reusable Checkbox Component
 const CheckboxField = ({ label, name, checked, onChange, className = "" }) => (
-  <div className="flex mt-5 gap-2">
+  <div className="flex gap-2">
     <input
       type="checkbox"
       name={name}
@@ -76,7 +93,7 @@ const CheckboxField = ({ label, name, checked, onChange, className = "" }) => (
       onChange={onChange}
       className={`h-4 w-4 mt-1 dark:bg-gray-700 ${className}`}
     />
-    <p className="dark:text-gray-50 text-sm">{label}</p>
+    <p className=" text-gray-500 dark:text-gray-50 text-sm">{label}</p>
   </div>
 );
 const ToggleField = ({ label, name, value, onChange, className = "" }) => {
@@ -84,7 +101,7 @@ const ToggleField = ({ label, name, value, onChange, className = "" }) => {
     <div className={`flex items-center justify-between  gap-3 mr-4 py-2 ${className}`}>
       <Label
         htmlFor={name}
-        className="text-black dark:text-gray-50 text-[0.7rem] font-normal"
+        className="text-gray-500 dark:text-gray-50  text-[0.7rem] font-semibold"
       >
         {label}
       </Label>
@@ -167,11 +184,12 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
   };
 
   return (
+    <div>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
       <div className="col-span-1">
         {/* Statutory Details */}
-      <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg">
-  <h1 className="text-sm font-semibold mb-4">Statutory Details</h1>
+      <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg">
+  <h1 className="text-sm text-gray-500 font-semibold mb-1">Statutory Details</h1>
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
     {/* LEFT COLUMN - All Toggles */}
@@ -273,8 +291,8 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
 
 
         {/* FNF Details */}
-        <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg mt-8">
-          <h1 className="text-sm font-semibold mb-4">FNF (Full & Final) Date</h1>
+        <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg mt-3">
+          <h1 className="text-sm text-gray-500 font-semibold mb-1">FNF (Full & Final) Date</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <DatePickerField
               label="Projected Date"
@@ -328,7 +346,7 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
             name="leavingRemark"
             value={formData.leavingRemark}
             onChange={handleChange}
-            className="h-[154px] mt-7"
+            className="h-[114px] mt-1"
           />
           <CheckboxField
             label="Suspended"
@@ -341,9 +359,9 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
 
       <div className="col-span-1">
         {/* Bank Details */}
-        <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg">
-          <h1 className="text-xl font-semibold mb-3">Bank Details</h1>
-          <p className="text-sm font-semibold mb-4">Salary Account</p>
+        <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg">
+          <h1 className="text-xl text-gray-500  font-semibold mb-2">Bank Details</h1>
+          <p className="text-sm  text-gray-500 font-semibold mb-1">Salary Account</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <InputField
               label="Bank Name"
@@ -376,8 +394,8 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
         </div>
 
         {/* Reimbursement Account */}
-        <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg mt-2">
-          <h1 className="text-sm font-semibold mb-4">Reimbursement Account</h1>
+        <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg mt-3">
+          <h1 className="text-sm text-gray-500 font-semibold mb-1">Reimbursement Account</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <InputField
               label="Bank Name"
@@ -410,8 +428,8 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
         </div>
 
         {/* Other Details */}
-        <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg mt-3">
-          <h1 className="text-sm font-semibold mb-4">Other Details</h1>
+        <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg mt-3">
+          <h1 className="text-sm text-gray-500 font-semibold mb-1">Other Details</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <InputField
               label="TDS Certifies Number"
@@ -447,9 +465,9 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
         </div>
 
         {/* Identification Details */}
-        <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg mt-3">
-          <h1 className="text-sm font-semibold mb-4">Add Identification Details</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 space-y-3.5">
+        <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 rounded-lg mt-3">
+          <h1 className="text-sm font-semibold text-gray-500 mb-1">Add Identification Details</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
             <InputField
               label="Aadhar Number"
               name="aadharNumber"
@@ -497,25 +515,26 @@ const StatutoryDetails = ({ onNext,onPrev }) => {
           </div>
         </div>
 
+      </div>
+
+
+    </div>
         {/* Buttons */}
          <div className="flex justify-end mt-1 w-full gap-2  ">
            <button
             onClick={()=>onPrev()}
-            className="bg-white dark:bg-[#E4E6EB]/10 border-2 cursor-pointer text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/5 my-3 ">
-              Previous
+className="bg-white dark:bg-[#E4E6EB]/10 border-1 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/9 my-3 ">              Previous
             </button>
-            <button
-            className="bg-white dark:bg-[#E4E6EB]/10 border-2 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/5 my-3 ">
+            <button className="bg-white dark:bg-[#E4E6EB]/10 border-1 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/9 my-3 ">
               Reset
             </button>
             <button
               onClick={() => onNext()}
-              className="bg-[#8629DF] text-white font-semibold text-[0.7rem] w-1/5 py-1 my-3 cursor-pointer  rounded-sm"
+              className="bg-[#8629DF] text-white font-semibold text-[0.7rem] w-1/9 py-1 my-3 cursor-pointer  rounded-sm"
             >
               Next
             </button>
           </div>
-      </div>
     </div>
   );
 };

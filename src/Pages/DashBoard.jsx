@@ -194,19 +194,19 @@ const DashBoard = () => {
                     type="monotone"
                     dataKey="employees"
                     stroke="#9376CA"
-                    strokeWidth={3}
+                    strokeWidth={1}
                     isAnimationActive={false}
                     dot={{
                       fill: "#FFFFFF",
-                      strokeWidth: 4,
+                      strokeWidth: 1,
                       stroke: "#9376CA",
-                      r: 4,
+                      r: 3,
                     }}
                     activeDot={{
-                      r: 6,
+                      r: 4,
                       fill: "#8b5cf6",
                       stroke: "#9376CA",
-                      strokeWidth: 4,
+                      strokeWidth: 1,
                     }}
                   />
                 </LineChart>
@@ -280,7 +280,7 @@ const DashBoard = () => {
         {payload.map((entry, index) => (
           <div key={index} className="flex items-center space-x-1">
             <div
-              className="h-4 w-4  xl:w-5 xl:h-5 rounded-full"
+              className="h-2 w-2  xl:w-2 xl:h-2 rounded-full"
               style={{ backgroundColor: entry.color }}
             ></div>
             <span className="text-[#8A8A8A] dark:text-gray-400 text-xs  xl:text-[0.7rem] font-medium">
@@ -412,7 +412,7 @@ const DashBoard = () => {
         </div>
         <div className=" col-span-2  overflow-x-auto bg-[#FFFFFF] dark:bg-gray-800 mt-12 border border-gray-200 dark:border-gray-700 drop-shadow-md rounded-lg  lg:overflow-hidden lg:w-full">
           <table className="min-w-xl [@media(min-width:1440px)]:min-w-[700px] over-x-auto  w-full  text-sm text-left">
-            <thead className="bg-[#8629DF] dark:bg-gray-500 text-[14px] text-white py-[6px] px-[10px]  rounded-t-2xl  ">
+            <thead className="bg-[#8629DF] dark:bg-gray-500 text-[14px] text-white py-[6px] px-[10px]  rounded-t-2xl   ">
               <tr>
                 <th className="px-6 py-2 text-[0.7rem] font-medium text-center ">
                   Employee Name
@@ -454,16 +454,16 @@ const DashBoard = () => {
                   <td className="p-2  text-center text-green-400 ">
                     {item.discipline}
                   </td>
-                  <td className="p-2 text-center">
+                  <td className="p-2 text-center flex justify-evenly ">
                     <button
-                      className={`px-10  w-[70%] py-1 rounded-md text-center ${
+                      className={`px-6  w-fit  py-1 rounded-sm  text-center   ${
                         item.daily_attendance === "Present"
-                          ? "text-[#34C759] bg-[#34C75933]"
+                          ? "text-[#34C759]  bg-[#34C75933]"
                           : item.daily_attendance === "Leave"
                           ? "text-[#007BFF] bg-[#007BFF33]"
                           : item.daily_attendance === "Absent"
-                          ? "text-[#FF3B30] bg-[#FF3B3033]"
-                          : "text-[#FF9800] bg-[#FF980033]"
+                          ? "text-[#FF3B30]  bg-[#FF3B3033]"
+                          : "text-[#FF9800]  bg-[#FF980033]"
                       }`}
                     >
                       {item.daily_attendance}

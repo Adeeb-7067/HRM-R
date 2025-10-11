@@ -71,7 +71,7 @@ const ForgotPassword = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={confirmPassword}
-                onChange={handlePasswordChange}
+                onChange={handleConfirmPasswordChange}
                 placeholder="*************"
                   className="bg-white border border-[#9853F9] text-gray-600 rounded-sm px-3 sm:px-4 py-2  w-full text-sm sm:text-[0.8rem] font-semibold"
               />

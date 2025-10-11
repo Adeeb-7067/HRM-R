@@ -3,29 +3,46 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsFolder } from "react-icons/bs";
+import { FaCamera, FaTimes } from "react-icons/fa";
 import { FiSearch, FiPhone } from "react-icons/fi";
-
+// import { SelectField, option } from '@/components/ui/SelectInput'
 // Reusable Input Component
-const InputField = ({ label, type = "text", name, value, onChange, className = "", ...props }) => (
+const InputField = ({
+  label,
+  type = "text",
+  name,
+  value,
+  onChange,
+  className = "",
+  ...props
+}) => (
   <div>
-    <label className="block text-black dark:text-gray-50 text-[0.7rem] font-normal mb-1">{label}</label>
+    <label className="block text-gray-500 font-semibold dark:text-gray-50 text-[0.7rem]  mb-1">
+      {label}
+    </label>
     <input
       type={type}
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-white dark:bg-gray-800 border border-gray-300 text-[0.7rem] dark:border-gray-700 rounded-sm px-4 py-1.5 ${className}`}
-      {...props}
+      className={`w-full h-7.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-white border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#9853F9] focus:ring-inset rounded-sm px-4 py-1.5 ${className}`}
     />
   </div>
 );
 
 // Reusable Select Component
-const SelectField = ({ label, name, value, onChange, children, className = "" }) => {
+const SelectField = ({
+  label,
+  name,
+  value,
+  onChange,
+  children,
+  className = "",
+}) => {
   return (
     <div className="w-full">
       {/* Label */}
-      <label className="block text-[0.7rem] font-normal text-black dark:text-gray-200 mb-1">
+      <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
         {label}
       </label>
 
@@ -35,16 +52,21 @@ const SelectField = ({ label, name, value, onChange, children, className = "" })
         value={value}
         onChange={onChange}
         className={cn(
-          "w-full px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
+          "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
           "bg-white dark:bg-gray-800",
           "border border-gray-300 dark:border-gray-700",
-          "text-gray-900 dark:text-gray-100",
+          "text-gray-600 dark:text-gray-100",
           "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
           "hover:border-gray-400 dark:hover:border-gray-500",
           "transition-all duration-200 ease-in-out",
+"focus:ring-2 focus:ring-[#9853F9] focus:ring-inset ",
+"dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
+"drops",
+
           className
         )}
       >
+        
         {children}
       </select>
     </div>
@@ -53,16 +75,18 @@ const SelectField = ({ label, name, value, onChange, children, className = "" })
 // Reusable Search Input Component
 const SearchInput = ({ label, name, value, onChange, icon: Icon }) => (
   <div className="relative">
-    <label className="block text-[0.7rem] font-normal text-black dark:text-gray-50 mb-1">{label}</label>
-    <div className="relative">
+    <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-50 mb-1">
+      {label}
+    </label>
+    <div className="relative h-7.5">
       <input
         type="text"
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full bg-white text-[0.7rem] dark:bg-gray-800 mb-2 border border-gray-300 dark:border-gray-600 rounded-sm pl-3 pr-10 py-1.5  focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none"
+      className={`w-full h-7.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-white border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#9853F9] focus:ring-inset rounded-sm px-4 py-1.5 `}
       />
-      <Icon className="absolute right-3 top-1/3 -translate-y-1/2 text-black dark:text-white" />
+      <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-white" />
     </div>
   </div>
 );
@@ -71,7 +95,7 @@ const PersonalInfo = ({ onNext }) => {
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     // Personal Details
-    image: '',
+    image: "",
     salutation: "",
     firstName: "",
     middleName: "",
@@ -163,36 +187,39 @@ const PersonalInfo = ({ onNext }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
         <div className="cols-span-1 flex flex-col">
           {/* Personal Details */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 p-5 rounded-lg ">
-            <h1 className="text-base font-semibold mb-2">Personal Details</h1>
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10 p-2 px-3 rounded-lg ">
+            <h1 className="text-base font-semibold mb-1 text-gray-500">
+              Personal Details
+            </h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 mb-2">
-              <div className="bg-white dark:bg-[#E4E6EB]/10 dark:text-white rounded-full w-30 h-30 xl:h-24 xl:w-24 flex flex-col justify-center items-center shadow relative mt-3 py-3 px-3 xl:px-0 overflow-hidden border border-gray-200 dark:border-gray-700">
+              <div className="bg-white  dark:bg-[#E4E6EB]/10 dark:text-white rounded-full w-30 h-30 xl:h-24 xl:w-24 flex flex-col justify-center items-center shadow relative mt-3 py-3 px-3 xl:px-0 overflow-hidden border border-gray-200 dark:border-gray-700">
                 {image && (
-                  <img
-                    src={image}
-                    value={formData.image}
-                    alt="Uploaded"
-                    className="absolute top-0 left-0 w-full h-full object-cover rounded-full"
-                  />
+                  <>
+                    <img
+                      src={image}
+                      alt="Uploaded"
+                      className="absolute top-0 left-0 w-full h-full object-cover rounded-full z-0"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setImage(null)}
+                      className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-1 z-10 hover:bg-red-600 transition"
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </>
                 )}
+
                 {!image && (
                   <>
-                    <BsFolder className="text-lg sm:text-md md:text-lg text-gray-500" />
-                    <p className="text-gray-700 dark:text-white text-[10px] lg:text-[10px] font-normal hidden lg:block">
-                      Upload your photo
-                    </p>
-                    <label
-                      htmlFor="fileUpload"
-                      className="bg-[#9376CA] text-white text-xs px-2 py-1 rounded-lg mt-2 cursor-pointer z-10"
-                    >
-                      Photo
-                    </label>
+                    <FaCamera className="text-lg sm:text-md md:text-lg text-gray-500 relative mt-2 cursor-pointer" />
                     <input
                       id="fileUpload"
                       type="file"
                       accept="image/*"
                       onChange={handleImageChange}
-                      className="hidden"
+                      className="opacity-0 absolute bg-black"
                     />
                   </>
                 )}
@@ -275,7 +302,7 @@ const PersonalInfo = ({ onNext }) => {
           </div>
 
           {/* Family Details */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10  p-5 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
             <InputField
               label="Father Name"
               name="fatherName"
@@ -315,8 +342,10 @@ const PersonalInfo = ({ onNext }) => {
           </div>
 
           {/* Present Address */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10  p-5 rounded-lg mt-4">
-            <h1 className="text-base font-semibold mb-2">Present Address</h1>
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg mt-4">
+            <h1 className="text-base text-gray-500 font-semibold mb-1">
+              Present Address
+            </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <InputField
                 label="Address 1"
@@ -389,22 +418,26 @@ const PersonalInfo = ({ onNext }) => {
                 <option value="uae">United Arab Emirates</option>
               </SelectField>
             </div>
-            <div className="flex mt-5 gap-2">
+            <div className="flex mt-2 gap-2">
               <input
                 type="checkbox"
                 name="sameAsPermanent"
                 checked={formData.sameAsPermanent}
                 onChange={handleChange}
                 id="Address"
-                className="h-4 w-4 mt-1"
+                className="h-4 w-4 mt-1 "
               />
-              <p className="text-[14px]">Use present address as permanent address</p>
+              <p className="text-[14px] text-gray-500">
+                Use present address as permanent address
+              </p>
             </div>
           </div>
 
           {/* Permanent Address */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 xl:h-[285px] p-5 rounded-lg mt-4">
-            <h1 className="text-base font-semibold mb-6">Permanent Address</h1>
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg mt-4">
+            <h1 className="text-base text-gray-500 font-semibold mb-1">
+              Permanent Address
+            </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
               <InputField
                 label="Address 1"
@@ -482,9 +515,11 @@ const PersonalInfo = ({ onNext }) => {
 
         <div className="col-span-1">
           {/* Professional Details */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 xl:h-[390px]  p-5 rounded-lg mb-4">
-            <h1 className="text-base font-semibold mb-6">Professional Details</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 space-y-5">
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10   p-2 px-3 rounded-lg mb-4">
+            <h1 className="text-base font-semibold mb-1 text-gray-500">
+              Professional Details
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <InputField
                 label="Employee Code"
                 name="employeeCode"
@@ -539,8 +574,7 @@ const PersonalInfo = ({ onNext }) => {
           </div>
 
           {/* Manager Details */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10  p-5 rounded-lg grid grid-cols-1 md:grid-cols-2 mt-4 gap-2  mb-4">
-            <div className="space-y-3">
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg grid grid-cols-1 md:grid-cols-2 mt-4 gap-2  mb-4">
               <SearchInput
                 label="L1 Manager"
                 name="l1Manager"
@@ -567,9 +601,7 @@ const PersonalInfo = ({ onNext }) => {
                 onChange={handleChange}
                 icon={BiPhoneCall}
               />
-            </div>
 
-            <div className="space-y-3">
               <SearchInput
                 label="HR Manager"
                 name="hrManager"
@@ -596,11 +628,10 @@ const PersonalInfo = ({ onNext }) => {
                 onChange={handleChange}
                 icon={BiPhoneCall}
               />
-            </div>
           </div>
 
           {/* Unit & Department */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10 space-y-4 p-5 rounded-lg grid grid-cols-1 md:grid-cols-2 mt-3 gap-2">
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg grid grid-cols-1 md:grid-cols-2 mt-3 gap-2">
             <SelectField
               label="Unit Name"
               name="unitName"
@@ -668,7 +699,7 @@ const PersonalInfo = ({ onNext }) => {
           </div>
 
           {/* Tax & PAN */}
-          <div className="bg-[#EFEFEF] dark:bg-[#E4E6EB]/10  p-5 rounded-lg mt-3">
+          <div className="bg-[#EFEFEF]/70 dark:bg-[#E4E6EB]/10  p-2 rounded-lg mt-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <InputField
                 label="PAN"
@@ -687,23 +718,25 @@ const PersonalInfo = ({ onNext }) => {
                 <option>New Regime</option>
               </SelectField>
             </div>
-            <p className="text-sm mt-2">Enter PAN in format: AAAPA1234A</p>
+            <p className="text-sm mt-2 text-gray-500">Enter PAN in format: AAAPA1234A</p>
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-end mt-1 w-full gap-2  ">
-            <button className="bg-white dark:bg-[#E4E6EB]/10 border-2 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/5 my-3 ">
+   
+        </div>
+        
+      </div>
+             <div className="flex justify-end mt-1 w-full gap-2  ">
+            <button className="bg-white dark:bg-[#E4E6EB]/10 border-1 text-[#8629DF] font-semibold text-[0.7rem] border-[#8629DF] py-1 rounded-sm w-1/8 my-3 ">
               Reset
             </button>
             <button
               onClick={() => onNext()}
-              className="bg-[#8629DF] text-white font-semibold text-[0.7rem] w-1/5 py-1 my-3 cursor-pointer  rounded-sm"
+              className="bg-[#8629DF] text-white font-semibold text-[0.7rem] w-1/8 py-1 my-3 cursor-pointer  rounded-sm"
             >
               Next
             </button>
           </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -22,7 +22,7 @@ const SelectField = ({ label, name, value, onChange, children, className = "" })
         name={name}
         value={value}
         onChange={onChange}
-        className={`w-full  px-2 rounded-sm py-1.5 text-[0.7rem] ${className}`}
+        className={`w-full  px-2 rounded-sm py-1.5 text-[0.7rem]  focus:border-2 focus:border-[#9853F9] ${className}`}
       >
         {children}
       </select>

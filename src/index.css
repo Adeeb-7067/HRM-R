@@ -1,8 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html ,body{
+  letter-spacing: 0.5px;
+  font-weight: normal;
+}
+.drops option {
+background-color: aquamarine;
+  }
+  .drops option:hover {
+    background-color: blueviolet !important;
+  }
+
 @custom-variant dark (&:is(.dark *));
-/* Hide placeholder text inside date input */
 .date-input::-webkit-datetime-edit,
 .date-input::-webkit-inner-spin-button,
 .date-input::-webkit-clear-button {
@@ -10,8 +20,8 @@
 }
 
 .date-input {
-  color: transparent;       /* hides placeholder text */
-  text-shadow: 0 0 0 black; /* ensures chosen date shows up */
+  color: transparent;      
+  text-shadow: 0 0 0 black;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {

@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
     >
 
 
-    <App />
+    <App/>
     </MantineProvider>
 
       </ThemeProvider>
