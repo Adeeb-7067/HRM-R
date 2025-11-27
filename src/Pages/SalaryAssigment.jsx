@@ -364,193 +364,139 @@ const SalaryAssigment = ({ onNext, onPrev }) => {
     );
   }
 
-  function PayTable() {
-    const [formData, setFormData] = useState({
-      oneTimePayments: [
-        {
-          id: 1,
-          name: "Joining Bonus",
-          checked: true,
-          amount: 50000,
-          frequency: 1,
-          isTag: true,
-          showSplits: true,
-        },
-      ],
+const PayTable = () => {
+  const [formData, setFormData] = useState({
+    oneTimePayments: [
+      {
+        id: 1,
+        name: "Joining Bonus",
+        checked: true,
+        amount: 0,
+        frequency: 1,
+        isTag: true,
+        showSplits: true,
+        dates: [], // store dates for splits
+      },
+    ],
+  });
+
+  const computeTotalFor = (items, parentId) =>
+    items
+      .filter((r) => r.id === parentId || r.parentId === parentId)
+      .reduce((s, r) => s + Number(r.amount || 0), 0);
+
+  const handleOneTimePaymentChange = (id, field, value) => {
+    setFormData((prev) => {
+      const updated = prev.oneTimePayments.map((r) =>
+        r.id === id ? { ...r, [field]: value } : r
+      );
+      return { ...prev, oneTimePayments: updated };
+    });
+  };
+
+  const handleFrequencyChange = (parentId, newFrequency) => {
+    setFormData((prev) => {
+      const cloned = [...prev.oneTimePayments];
+      const parentIndex = cloned.findIndex((r) => r.id === parentId);
+      if (parentIndex === -1) return prev;
+
+      const parent = { ...cloned[parentIndex] };
+      const totalAmount = computeTotalFor(cloned, parentId);
+      const freq = Number(newFrequency);
+      if (!totalAmount || freq <= 0) return prev;
+
+      const base = Math.floor(totalAmount / freq);
+      const remainder = totalAmount % freq;
+      const parts = Array.from({ length: freq }, (_, i) =>
+        i === freq - 1 ? base + remainder : base
+      );
+
+      parent.frequency = freq;
+      parent.amount = parts[0];
+      parent.showSplits = freq > 1;
+
+      const withoutSplits = cloned.filter((r) => r.parentId !== parentId);
+
+      const splitRows = parts.slice(1).map((amt, i) => ({
+        id: `${parentId}-s${i + 1}`,
+        name: `${parent.name} - Part ${i + 2}`,
+        checked: false,
+        amount: amt,
+        frequency: 1,
+        isTag: true,
+        isSplit: true,
+        parentId,
+        date: "", // single date input per split
+      }));
+
+      const parentPos = withoutSplits.findIndex((r) => r.id === parentId);
+      const newRows = [
+        ...withoutSplits.slice(0, parentPos),
+        parent,
+        ...splitRows,
+        ...withoutSplits.slice(parentPos + 1),
+      ];
+
+      return { ...prev, oneTimePayments: newRows };
+    });
+  };
+
+  const handleDateChange = (id, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      oneTimePayments: prev.oneTimePayments.map((r) =>
+        r.id === id ? { ...r, date: value } : r
+      ),
+    }));
+  };
+
+  const visibleRows = formData.oneTimePayments
+    .filter((r) => !r.isSplit)
+    .flatMap((parent) => {
+      if (parent.showSplits) {
+        const splits = formData.oneTimePayments.filter(
+          (r) => r.parentId === parent.id
+        );
+        return [parent, ...splits];
+      }
+      return [parent];
     });
 
-    const computeTotalFor = (items, parentId) =>
-      items
-        .filter((r) => r.id === parentId || r.parentId === parentId)
-        .reduce((s, r) => s + Number(r.amount || 0), 0);
+  return (
+    <div className="w-full mx-auto mt-6 overflow-x-auto bg-white dark:bg-[#E4E6EB]/10 border border-gray-300 rounded-sm">
+      <table className="w-full text-[0.8rem] border-separate border-spacing-0 text-center">
+        <thead>
+          <tr className="bg-[#8629DF] dark:bg-gray-500 text-white text-[0.8rem]">
+            <th className="px-2 py-3 text-left font-semibold rounded-tl-sm">
+              Pay Head Name
+            </th>
+            <th className="px-6 py-3 font-semibold">Amount</th>
+            <th className="px-6 py-3 font-semibold">Payment Frequency</th>
+          </tr>
+        </thead>
 
-    const handleOneTimePaymentChange = (id, field, value) => {
-      setFormData((prev) => {
-        const updated = prev.oneTimePayments.map((r) =>
-          r.id === id ? { ...r, [field]: value } : r
-        );
-        return { ...prev, oneTimePayments: updated };
-      });
-    };
-
-    const handleFrequencyIncrease = (parentId) => {
-      setFormData((prev) => {
-        const cloned = [...prev.oneTimePayments];
-        const parentIndex = cloned.findIndex((r) => r.id === parentId);
-        if (parentIndex === -1) return prev;
-
-        const parent = { ...cloned[parentIndex] };
-
-        const totalAmount = computeTotalFor(cloned, parentId);
-        if (!totalAmount || totalAmount <= 0) return prev;
-
-        const newFrequency = Number(parent.frequency) + 1;
-        const base = Math.floor(totalAmount / newFrequency);
-        const remainder = totalAmount % newFrequency;
-        const parts = Array.from({ length: newFrequency }, (_, i) =>
-          i === newFrequency - 1 ? base + remainder : base
-        );
-
-        parent.frequency = newFrequency;
-        parent.showSplits = true;
-        parent.amount = parts[0];
-
-        const withoutSplits = cloned.filter((r) => r.parentId !== parentId);
-
-        const splitRows = parts.slice(1).map((amt, i) => ({
-          id: `${parentId}-s${i + 1}`,
-          name: ` ${i + 2}.)  ${parent.name}  `,
-          checked: false,
-          amount: amt,
-          frequency: 1,
-          isTag: true,
-          isSplit: true,
-          parentId,
-        }));
-
-        const parentPos = withoutSplits.findIndex((r) => r.id === parentId);
-        const newRows = [
-          ...withoutSplits.slice(0, parentPos),
-          parent,
-          ...splitRows,
-          ...withoutSplits.slice(parentPos + 1),
-        ];
-
-        return { ...prev, oneTimePayments: newRows };
-      });
-    };
-
-    const handleFrequencyDecrease = (parentId) => {
-      setFormData((prev) => {
-        const cloned = [...prev.oneTimePayments];
-        const parentIndex = cloned.findIndex((r) => r.id === parentId);
-        if (parentIndex === -1) return prev;
-
-        const parent = { ...cloned[parentIndex] };
-        if (parent.frequency <= 1) return prev;
-
-        const newFrequency = parent.frequency - 1;
-
-        const totalAmount = computeTotalFor(cloned, parentId);
-        const base = Math.floor(totalAmount / newFrequency);
-        const remainder = totalAmount % newFrequency;
-        const parts = Array.from({ length: newFrequency }, (_, i) =>
-          i === newFrequency - 1 ? base + remainder : base
-        );
-
-        parent.frequency = newFrequency;
-        parent.amount = parts[0];
-        parent.showSplits = newFrequency > 1;
-
-        // Remove old splits
-        const withoutSplits = cloned.filter((r) => r.parentId !== parentId);
-
-        const splitRows = parts.slice(1).map((amt, i) => ({
-          id: `${parentId}-s${i + 1}`,
-          name: `${parent.name} - Part ${i + 2}`,
-          checked: false,
-          amount: amt,
-          frequency: 1,
-          isTag: true,
-          isSplit: true,
-          parentId,
-        }));
-
-        const parentPos = withoutSplits.findIndex((r) => r.id === parentId);
-        const newRows = [
-          ...withoutSplits.slice(0, parentPos),
-          parent,
-          ...splitRows,
-          ...withoutSplits.slice(parentPos + 1),
-        ];
-
-        return { ...prev, oneTimePayments: newRows };
-      });
-    };
-
-    const toggleSplits = (parentId) => {
-      setFormData((prev) => ({
-        ...prev,
-        oneTimePayments: prev.oneTimePayments.map((r) =>
-          r.id === parentId ? { ...r, showSplits: !r.showSplits } : r
-        ),
-      }));
-    };
-
-    const visibleRows = formData.oneTimePayments
-      .filter((r) => !r.isSplit)
-      .flatMap((parent) => {
-        if (parent.showSplits) {
-          const splits = formData.oneTimePayments.filter(
-            (r) => r.parentId === parent.id
-          );
-          return [parent, ...splits];
-        }
-        return [parent];
-      });
-
-    return (
-      <div className="w-full mx-auto mt-6 overflow-x-auto bg-white dark:bg-[#E4E6EB]/10  border border-gray-300 rounded-sm">
-        <table className="w-full text-[0.8rem] border-separate border-spacing-0 text-center">
-          <thead>
-            <tr className="bg-[#8629DF] dark:bg-gray-500 text-white  text-[0.8rem]">
-              <th className="px-2 py-3 text-[0.8rem] text-left font-semibold rounded-tl-sm">
-                Pay Head Name
-              </th>
-              <th className="px-6 py-3 font-semibold">Amount</th>
-              <th className="px-6 py-3 font-semibold rounded-tr-sm">
-                Payment Frequency
-              </th>
-            </tr>
-          </thead>
-
-          <tbody className="dark:text-gray-200 text-[0.7rem]">
-            {visibleRows.map((row) => {
-              const isParent = !row.isSplit;
-              return (
-                <tr
-                  key={row.id}
-                  className={`text-center ${row.isSplit ? "bg-gray-50" : ""}`}
-                >
-                  <td className="px-6 py-4 flex items-center gap-2">
+        <tbody className="dark:text-gray-200 text-[0.7rem]">
+          {visibleRows.map((row) => {
+            const isParent = !row.isSplit;
+            return (
+              <React.Fragment key={row.id}>
+                <tr className={`${row.isSplit ? "bg-gray-50" : ""}`}>
+                  <td className="px-6 py-4 flex items-center gap-2 z-0">
                     {!row.isSplit && (
-                      <>
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4"
-                          checked={!!row.checked}
-                          onChange={(e) =>
-                            handleOneTimePaymentChange(
-                              row.id,
-                              "checked",
-                              e.target.checked
-                            )
-                          }
-                        />
-                      </>
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4"
+                        checked={!!row.checked}
+                        onChange={(e) =>
+                          handleOneTimePaymentChange(
+                            row.id,
+                            "checked",
+                            e.target.checked
+                          )
+                        }
+                      />
                     )}
-
-                    <span className="font-medium">{row.name}</span>
+                    <span className={`${row.isSplit ? "font-medium flex justify-center w-full" : "font-medium"}`} >{row.name}</span>
                   </td>
 
                   <td className="px-6 py-4">
@@ -558,76 +504,55 @@ const SalaryAssigment = ({ onNext, onPrev }) => {
                       type="text"
                       value={row.amount}
                       onChange={(e) =>
-                        handleOneTimePaymentChange(
-                          row.id,
-                          "amount",
-                          e.target.value
-                        )
+                        handleOneTimePaymentChange(row.id, "amount", e.target.value)
                       }
-                      className="w-24 text-center border rounded px-1 py-1"
-                      disabled={row.isSplit || (isParent && row.frequency > 1)}
+                      className="w-24 text-center  rounded px-1 py-1 focus:outline-none focus:ring-0 text-[0.7rem]"
                     />
                   </td>
 
                   <td className="px-6 py-4">
-                    {row.isTag ? (
-                      <div className="flex justify-center items-center gap-2">
-                        {!row.isSplit && (
-                          <div className="flex items-center gap-1">
-                            <button
-                              onClick={() => handleFrequencyDecrease(row.id)}
-                              className="px-2 py-1 text-xs bg-purple-100 text-purple-600 rounded hover:bg-purple-200 transition"
-                            >
-                              −
-                            </button>
-
-                            <span className="border border-purple-400 rounded-md px-2 py-1 text-purple-600 font-medium">
-                              {row.frequency}
-                            </span>
-
-                            <button
-                              onClick={() => handleFrequencyIncrease(row.id)}
-                              className="px-2 py-1 text-xs bg-purple-100 text-purple-600 rounded hover:bg-purple-200 transition"
-                            >
-                              +
-                            </button>
-
-                            <button
-                              onClick={() => toggleSplits(row.id)}
-                              className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition "
-                            >
-                              {row.showSplits ? (
-                                <FaChevronUp />
-                              ) : (
-                                <FaChevronDown />
-                              )}
-                            </button>
-                          </div>
-                        )}
+                    {isParent ? (
+                      <div className="flex items-center gap-1 justify-center">
+                        <button
+                          onClick={() =>
+                            handleFrequencyChange(row.id, row.frequency - 1)
+                          }
+                          className="px-2 py-1 text-xs bg-purple-100 text-purple-600 rounded hover:bg-purple-200"
+                        >
+                          −
+                        </button>
+                        <span className="border border-purple-400 rounded-md px-2 py-1 text-purple-600 font-medium">
+                          {row.frequency}
+                        </span>
+                        <button
+                          onClick={() =>
+                            handleFrequencyChange(row.id, row.frequency + 1)
+                          }
+                          className="px-2 py-1 text-xs bg-purple-100 text-purple-600 rounded hover:bg-purple-200"
+                        >
+                          +
+                        </button>
                       </div>
                     ) : (
-                      <input
-                        type="text"
-                        value={row.frequency}
-                        onChange={(e) =>
-                          handleOneTimePaymentChange(
-                            row.id,
-                            "frequency",
-                            e.target.value
-                          )
-                        }
-                        className="w-32 text-center border rounded"
+                      <div>
+                     <input
+                        type="date"
+                        value={row.date || ""}
+                        onChange={(e) => handleDateChange(row.id, e.target.value)}
+                        className="w-32 text-center border rounded px-1 py-1"
                       />
+                        </div>
                     )}
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+              </React.Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
   return (
     <div>

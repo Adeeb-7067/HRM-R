@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsEye, BsPlusSquareFill } from "react-icons/bs";
 import { FaEye, FaEdit, FaPlus } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
@@ -16,7 +16,7 @@ import SearchIcon from "../Assets/Searchicon.png";
 import { MdArrowDropDown } from "react-icons/md";
 import { LuRefreshCw } from "react-icons/lu";
 import { Link } from "react-router-dom";
-import { IoMdSearch } from "react-icons/io";
+import { IoMdArrowDropdown, IoMdArrowDropup, IoMdSearch } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { CiExport, CiImport } from "react-icons/ci";
 import { Delete, Eye, Pencil, Trash2 } from "lucide-react";
@@ -26,7 +26,49 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 const EmployeList = () => {
+
+
+
+
+
   const [open, setOpen] = useState(false);
+  const [visibleFilters, setVisibleFilters] = useState({
+    unitName: false,
+    department: false,
+    location: false,
+    designation: false,
+    unit: false,
+    grade: false,
+    salaryBasis: false,
+    level: false,
+    presentDepartment: false,
+  })
+
+   
+  const [filterValues, setFilterValues] = useState({
+    unitName: "",
+    department: "",
+    location: "",
+    designation: "",
+    grade: "",
+    level: "",
+  });
+  //  useEffect(()=>{
+
+
+  // },[visibleFilters]);
+
+
+  const handleFilterChange = (key, value) => {
+    setFilterValues((prev) => ({ ...prev, [key]: value }));
+
+  };
+
+  const handleRemoveFilter = (key) => {
+    setFilterValues((prev) => ({ ...prev, [key]: "" }));
+  };
+
+
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -77,10 +119,69 @@ const EmployeList = () => {
       profilePic: "https://i.pravatar.cc/102",
     },
   ];
+  const filterOptions = [
+    { key: "unitName", label: "Unit Name" },
+    { key: "department", label: "Department" },
+    { key: "location", label: "Location - Unit" },
+    { key: "designation", label: "Designation" },
+    { key: "grade", label: "Grade" },
+    { key: "level", label: "Level" },
+  ];
+
+  const dropdownData = {
+    unitName: ["Kajal Thakur", "Finance Unit", "Tech Unit"],
+    department: ["IT", "Design", "Marketing"],
+    location: ["Bhopal", "Indore", "Delhi"],
+    designation: ["UX/UI Designer", "Developer", "Manager"],
+    grade: ["G1", "G2", "G3"],
+    level: ["L1", "L2", "L3"],
+  };
+
+
+
 
   const filterData = employees.filter((item) =>
     item.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())
   );
+
+
+  const renderDropdown = (key, label) => {
+    if (!visibleFilters[key]) return null;
+
+    return (
+      <div className="flex flex-col">
+        {/* DROPDOWN */}
+        <select
+          className="border-2 px-2 py-1 rounded-4xl w-fit text-[0.7rem]"
+          value={filterValues[key]}
+          onChange={(e) => handleFilterChange(key, e.target.value)}
+        >
+          <option className="text-[0.7rem]" value=""> {label}</option>
+
+          {dropdownData[key].map((item) => (
+            <option className="text-[0.7rem]" key={item} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+
+        {/* SELECTED TAG */}
+        {/* {filterValues[key] && (
+        <div className="text-sm font-normal flex justify-between items-center  p-2 w-fit rounded-sm gap-2 mt-2 bg-gray-200/60">
+          {filterValues[key]}
+
+          <span
+            onClick={() => handleRemoveFilter(key)}
+            className=" cursor-pointer text-xl leading-none "
+          >
+            ×
+          </span>
+        </div>
+      )} */}
+      </div>
+    );
+  };
+
   return (
     <div className="p-2 sm:p-4 ">
       {/* Top Actions */}
@@ -126,13 +227,16 @@ const EmployeList = () => {
         </div>
 
         <button
-          onClick={() => {
-            setOpen(true);
-          }}
+          onClick={() => setOpen(prev => !prev)}
+
           className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-xs md:text-[0.7rem] px-4 p-1 md:p-0  min-w-[50%]  md:min-w-[5rem]  rounded-sm flex items-center justify-center gap-1"
         >
           <HiAdjustmentsHorizontal className="md:w-4 md:h-4" />
-          Filter
+          Filter  {open ? (<>
+          <IoMdArrowDropdown className="w-3 mt-0.5 h-3" />
+          </>) : (<>
+          <IoMdArrowDropup className="w-3 mt-0.5 h-3" />
+          </>)}
         </button>
         <button className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2 md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2">
           <CiImport className="md:w-4 md:h-4" />
@@ -143,6 +247,45 @@ const EmployeList = () => {
           Bulk Import
         </button>
       </div>
+
+      <div className="flex gap-4 flex-wrap my-4">
+
+        {renderDropdown("unitName", "Unit")}
+        {renderDropdown("department", "Department")}
+        {renderDropdown("location", "Location")}
+        {renderDropdown("designation", "Designation")}
+        {renderDropdown("grade", "Grade")}
+        {renderDropdown("level", "Level")}
+
+      </div>
+
+      <div className="mt-4">
+        <div className="flex flex-wrap gap-2 ">
+
+          {Object.entries(filterValues).map(([key, value]) => {
+            if (!value) return null;
+            return (
+              <div
+                key={key}
+                className="bg-gray-200/60 px-3 py-1 rounded-sm text-xs flex items-center gap-2"
+              >
+                <span className="font-semibold text-[0.7rem]">{value}</span>
+
+                <button
+                  onClick={() => handleRemoveFilter(key)}
+                  className="text-gray-700 hover:text-red-500 text-lg cursor-pointer leading-none"
+                >
+                  ×
+                </button>
+              </div>
+            );
+          })}
+
+        </div>
+
+      </div>
+
+
 
       <div className="rounded-sm mt-5 shadow drop-shadow-xs  border border-gray-200 dark:border-gray-600">
         {/* <h2 className="text-lg sm:text-[1.2rem] text-[#252C58] dark:text-gray-400 font-semibold mb-8">
@@ -269,11 +412,10 @@ const EmployeList = () => {
             {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
               <button
                 key={num}
-                className={`px-3 py-1 border rounded ${
-                  num === 1
-                    ? "bg-[#8629DF] text-white border-[#8629DF]"
-                    : "border-[#8629DF] hover:bg-[#8629DF] hover:text-white"
-                }`}
+                className={`px-3 py-1 border rounded ${num === 1
+                  ? "bg-[#8629DF] text-white border-[#8629DF]"
+                  : "border-[#8629DF] hover:bg-[#8629DF] hover:text-white"
+                  }`}
               >
                 {num}
               </button>
@@ -475,74 +617,74 @@ const EmployeList = () => {
         //     </div>
         //   </div>
         // </div>
-        <div className="fixed inset-0 flex bg-black/5  justify-end top-0 right-0 z-50">
-<div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 overflow-y-auto h-full">
-{/* Close */}
-<button
-onClick={() => setOpen(false)}
-className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl"
->
-✕
-</button>
+        <div className="fixed inset-0 flex   justify-end top-55 right-5 z-50 overflow-auto no-scrollbar ">
+          <div className="bg-white rounded-xs shadow-xl w-full max-w-xs p-6 overflow-y-auto h-[550px]">
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
+            >
+              ✕
+            </button>
 
 
-{/* Filter */}
-<h2 className="text-lg font-semibold text-gray-700 mb-3">Filter</h2>
+            <h2 className="text-lg font-semibold text-gray-700 mb-3">Filter</h2>
 
 
-<div className="space-y-2 border-b pb-4">
-{[
-"Unit Name",
-"Department",
-"Location",
-"Designation",
-"Unit",
-"Grade",
-"Salary Basis",
-"Level",
-"Present Department",
-].map((item) => (
-<label key={item} className="flex items-center gap-2 text-sm text-gray-700">
-<input style={{
-  color:"purple",
-  backgroundColor:"purple",
-}} type="checkbox" className="w-4 h-4 accent-[#9376CA] " defaultChecked />
-{item}
-</label>
-))}
-</div>
+            <div className="space-y-2 border-b pb-4">
+              {filterOptions.map((f) => (
+                <label key={f.key} className="flex items-center gap-2 text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 accent-[#9376CA]"
+                    checked={visibleFilters[f.key]}
+                    onChange={(e) =>{
+
+                      setVisibleFilters(prev => ({ ...prev, [f.key]: e.target.checked }))
+                      if(e.target.checked ===false){
+                        handleRemoveFilter(f.key)
+                      }
+                      
+                    }
+                    }
+                  />
+                  {f.label}
+                </label>
+              ))}
 
 
-{/* EMP Info */}
-<h2 className="text-lg font-semibold text-gray-700 mt-4 mb-3">EMP Info</h2>
+            </div>
 
 
-<div className="space-y-2 border-b pb-4">
-{[
-"EMP Code",
-"EMP Full Name",
-].map((item) => (
-<label key={item} className="flex items-center gap-2 text-sm text-gray-700">
-<input type="checkbox" className="w-4 h-4 accent-[#9376CA]" defaultChecked />
-{item}
-</label>
-))}
-</div>
+            {/* EMP Info */}
+            <h2 className="text-lg font-semibold text-gray-700 mt-4 mb-3">EMP Info</h2>
+
+            {/* 
+            <div className="space-y-2 border-b pb-4">
+              {[
+                "EMP Code",
+                "EMP Full Name",
+              ].map((item) => (
+                <label key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                  <input type="checkbox" className="w-4 h-4 accent-[#9376CA]" defaultChecked />
+                  {item}
+                </label>
+              ))}
+            </div> */}
 
 
-{/* Buttons */}
-<div className="mt-6 flex flex-col gap-3">
-<button className="flex items-center justify-center gap-2 bg-[#9376CA] text-white px-5 py-2 rounded-md shadow hover:bg-[#7a5fb8]">
-<img src={SearchIcon} className="w-5 h-5" /> Applied
-</button>
+            {/* Buttons */}
+            <div className="mt-6 flex flex-col gap-3">
+              <button className="flex items-center justify-center gap-2 bg-[#9376CA] text-white px-5 py-2 rounded-md shadow hover:bg-[#7a5fb8]">
+                <img src={SearchIcon} className="w-5 h-5" /> Applied
+              </button>
 
 
-<button className="flex items-center justify-center gap-2 bg-gray-200 border px-5 py-2 rounded-md shadow text-gray-700 hover:bg-gray-300">
-<LuRefreshCw /> Reset
-</button>
-</div>
-</div>
-</div>
+              <button className="flex items-center justify-center gap-2 bg-gray-200 border px-5 py-2 rounded-md shadow text-gray-700 hover:bg-gray-300">
+                <LuRefreshCw /> Reset
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import { CalendarIcon } from 'lucide-react';
 import React, { useState, useRef } from 'react';
 
-const Calendar = ({ label, name, value, onChange }) => {
+const Calendar = ({ label, name, value, onChange ,style}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -127,12 +127,13 @@ const Calendar = ({ label, name, value, onChange }) => {
     <div className="flex flex-col space-y-1 w-full max-w-sm mx-auto cursor-pointer">
       {/* Label */}
       <label className="text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200">
-        {label || 'Date'}
+        {label || ''}
       </label>
 
       {/* Input Field */}
       <div className="relative">
         <div
+        style={style}
           onClick={() => setIsCalendarOpen(true)}
           className={cn(
             "w-full flex items-center text-left font-normal py-1.5 h-[1.9rem] transition-all duration-200",
@@ -152,7 +153,7 @@ const Calendar = ({ label, name, value, onChange }) => {
         {isCalendarOpen && (
           <div
             ref={calendarRef}
-            className="w-full p-3 rounded-sm shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 absolute z-10 mt-1"
+            className="w-full p-3 rounded-sm shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 absolute z-[99999] mt-1"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-3">
