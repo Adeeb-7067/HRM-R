@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils"; 
 import { ChevronDown } from "lucide-react";
 
-const CustomSelectField = ({
+const SelectField = ({
   label,
   name,
   value,
@@ -67,7 +67,7 @@ const CustomSelectField = ({
           className={cn(
             "absolute z-10 mt-1 w-full rounded-sm shadow-lg border border-gray-200 dark:border-gray-700",
             "bg-white dark:bg-gray-800 text-[0.7rem]",
-            "max-h-40 overflow-y-auto transition-all duration-150 ease-in-out"
+            "max-h-40 overflow-y-auto transition-all duration-150 ease-in-out no-scrollbar"
           )}
         >
           {options.map((opt) => (
@@ -90,4 +90,4 @@ const CustomSelectField = ({
   );
 };
 
-export default CustomSelectField;
+export default SelectField;

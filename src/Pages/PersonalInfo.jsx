@@ -5,8 +5,9 @@ import { BiPhoneCall } from "react-icons/bi";
 import { BsFolder } from "react-icons/bs";
 import { FaCamera, FaTimes } from "react-icons/fa";
 import { FiSearch, FiPhone } from "react-icons/fi";
-// import { SelectField, option } from '@/components/ui/SelectInput'
-// Reusable Input Component
+import SelectField   from "@/components/SelectFeild";
+import { Label } from '@/components/ui/label';
+
 const InputField = ({
   label,
   type = "text",
@@ -30,49 +31,48 @@ const InputField = ({
   </div>
 );
 
-// Reusable Select Component
-const SelectField = ({
-  label,
-  name,
-  value,
-  onChange,
-  children,
-  className = "",
-}) => {
-  return (
-    <div className="w-full">
-      {/* Label */}
-      <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
-        {label}
-      </label>
+// const SelectField = ({
+//   label,
+//   name,
+//   value,
+//   onChange,
+//   children,
+//   className = "",
+// }) => {
+//   return (
+//     <div className="w-full">
+//       {/* Label */}
+//       <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
+//         {label}
+//       </label>
 
-      {/* Select */}
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={cn(
-          "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
-          "bg-white dark:bg-gray-800",
-          "border border-gray-300 dark:border-gray-700",
-          "text-gray-600 dark:text-gray-100",
-          "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
-          "hover:border-gray-400 dark:hover:border-gray-500",
-          "transition-all duration-200 ease-in-out",
-"focus:ring-2 focus:ring-[#9853F9] focus:ring-inset ",
-"dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
-"drops",
+//       {/* Select */}
+//       <select
+//         name={name}
+//         value={value}
+//         onChange={onChange}
+//         className={cn(
+//           "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
+//           "bg-white dark:bg-gray-800",
+//           "border border-gray-300 dark:border-gray-700",
+//           "text-gray-600 dark:text-gray-100",
+//           "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
+//           "hover:border-gray-400 dark:hover:border-gray-500",
+//           "transition-all duration-200 ease-in-out",
+// "focus:ring-2 focus:ring-[#9853F9] focus:ring-inset ",
+// "dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
+// "drops",
 
-          className
-        )}
-      >
+//           className
+//         )}
+//       >
         
-        {children}
-      </select>
-    </div>
-  );
-};
-// Reusable Search Input Component
+//         {children}
+//       </select>
+//     </div>
+//   );
+// };
+
 const SearchInput = ({ label, name, value, onChange, icon: Icon }) => (
   <div className="relative">
     <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-50 mb-1">
@@ -231,11 +231,19 @@ const PersonalInfo = ({ onNext }) => {
                   name="salutation"
                   value={formData.salutation}
                   onChange={handleChange}
+                  options={[
+  { value: "", label: "Select Title" },
+  { value: "mr", label: "Mr." },
+  { value: "ms", label: "Ms." },
+  { value: "mrs", label: "Mrs." },
+  { value: "dr", label: "Dr." }
+]
+}
                 >
-                  <option>Mr.</option>
-                  <option>Ms.</option>
-                  <option>Mrs.</option>
-                  <option>Dr.</option>
+                    {/* <option>Mr.</option>
+                    <option>Ms.</option>
+                    <option>Mrs.</option>
+                    <option>Dr.</option> */}
                 </SelectField>
 
                 <InputField
@@ -261,11 +269,17 @@ const PersonalInfo = ({ onNext }) => {
               </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-              <InputField
+              <SelectField
                 label="Gender"
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
+                options={[
+                {value:'Male',label:'Male'},
+                                {value:'Female',label:'Female'}
+
+
+                ]}
               />
               <InputField
                 label="Nationality"
@@ -364,8 +378,19 @@ const PersonalInfo = ({ onNext }) => {
                 name="presentCity"
                 value={formData.presentCity}
                 onChange={handleChange}
+                 options={[
+    { value: "", label: "Select City" },
+    { value: "mumbai", label: "Mumbai" },
+    { value: "delhi", label: "Delhi" },
+    { value: "bangalore", label: "Bangalore" },
+    { value: "chennai", label: "Chennai" },
+    { value: "kolkata", label: "Kolkata" },
+    { value: "hyderabad", label: "Hyderabad" },
+    { value: "pune", label: "Pune" },
+    { value: "ahmedabad", label: "Ahmedabad" }
+  ]}
               >
-                <option value="">Select City</option>
+                {/* <option value="">Select City</option>
                 <option value="mumbai">Mumbai</option>
                 <option value="delhi">Delhi</option>
                 <option value="bangalore">Bangalore</option>
@@ -373,7 +398,7 @@ const PersonalInfo = ({ onNext }) => {
                 <option value="kolkata">Kolkata</option>
                 <option value="hyderabad">Hyderabad</option>
                 <option value="pune">Pune</option>
-                <option value="ahmedabad">Ahmedabad</option>
+                <option value="ahmedabad">Ahmedabad</option> */}
               </SelectField>
               <InputField
                 label="Enter Zip"
@@ -386,8 +411,22 @@ const PersonalInfo = ({ onNext }) => {
                 name="presentState"
                 value={formData.presentState}
                 onChange={handleChange}
+                options={[
+  { value: "", label: "Select State" },
+  { value: "maharashtra", label: "Maharashtra" },
+  { value: "delhi", label: "Delhi" },
+  { value: "karnataka", label: "Karnataka" },
+  { value: "tamil-nadu", label: "Tamil Nadu" },
+  { value: "west-bengal", label: "West Bengal" },
+  { value: "telangana", label: "Telangana" },
+  { value: "gujarat", label: "Gujarat" },
+  { value: "rajasthan", label: "Rajasthan" },
+  { value: "uttar-pradesh", label: "Uttar Pradesh" },
+  { value: "madhya-pradesh", label: "Madhya Pradesh" }
+]
+}
               >
-                <option value="">Select State</option>
+                {/* <option value="">Select State</option>
                 <option value="maharashtra">Maharashtra</option>
                 <option value="delhi">Delhi</option>
                 <option value="karnataka">Karnataka</option>
@@ -397,15 +436,29 @@ const PersonalInfo = ({ onNext }) => {
                 <option value="gujarat">Gujarat</option>
                 <option value="rajasthan">Rajasthan</option>
                 <option value="uttar-pradesh">Uttar Pradesh</option>
-                <option value="madhya-pradesh">Madhya Pradesh</option>
+                <option value="madhya-pradesh">Madhya Pradesh</option> */}
               </SelectField>
               <SelectField
                 label="Country"
                 name="presentCountry"
                 value={formData.presentCountry}
                 onChange={handleChange}
+                options={[
+  { value: "", label: "Select Country" },
+  { value: "india", label: "India" },
+  { value: "united-states", label: "United States" },
+  { value: "united-kingdom", label: "United Kingdom" },
+  { value: "canada", label: "Canada" },
+  { value: "australia", label: "Australia" },
+  { value: "germany", label: "Germany" },
+  { value: "france", label: "France" },
+  { value: "japan", label: "Japan" },
+  { value: "singapore", label: "Singapore" },
+  { value: "uae", label: "United Arab Emirates" }
+]
+}
               >
-                <option value="">Select Country</option>
+                {/* <option value="">Select Country</option>
                 <option value="india">India</option>
                 <option value="united-states">United States</option>
                 <option value="united-kingdom">United Kingdom</option>
@@ -415,7 +468,7 @@ const PersonalInfo = ({ onNext }) => {
                 <option value="france">France</option>
                 <option value="japan">Japan</option>
                 <option value="singapore">Singapore</option>
-                <option value="uae">United Arab Emirates</option>
+                <option value="uae">United Arab Emirates</option> */}
               </SelectField>
             </div>
             <div className="flex mt-2 gap-2">

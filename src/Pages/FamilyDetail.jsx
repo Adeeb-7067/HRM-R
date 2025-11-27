@@ -3,6 +3,7 @@ import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import React from "react";
 import toast from "react-hot-toast";
+import SelectField from "@/components/SelectFeild";
 
 // Reusable Input Component
 const InputField = ({
@@ -29,45 +30,45 @@ const InputField = ({
 );
 
 // Reusable Select Component
-const SelectField = ({
-  label,
-  name,
-  value,
-  onChange,
-  children,
-  className = "",
-}) => {
-  return (
-    <div className="w-full">
-      {/* Label */}
-      <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
-        {label}
-      </label>
+// const SelectField = ({
+//   label,
+//   name,
+//   value,
+//   onChange,
+//   children,
+//   className = "",
+// }) => {
+//   return (
+//     <div className="w-full">
+//       {/* Label */}
+//       <label className="block text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200 mb-1">
+//         {label}
+//       </label>
 
-      {/* Select */}
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={cn(
-          "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
-          "bg-white dark:bg-gray-800",
-          "border border-gray-300 dark:border-gray-700",
-          "text-gray-600 dark:text-gray-100",
-          "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
-          "hover:border-gray-400 dark:hover:border-gray-500",
-          "transition-all duration-200 ease-in-out",
-"focus:ring-2 focus:ring-[#9853F9] focus:ring-inset ",
-"dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
+//       {/* Select */}
+//       <select
+//         name={name}
+//         value={value}
+//         onChange={onChange}
+//         className={cn(
+//           "w-full h-7.5 px-4 py-1.5 rounded-sm text-[0.7rem] font-normal",
+//           "bg-white dark:bg-gray-800",
+//           "border border-gray-300 dark:border-gray-700",
+//           "text-gray-600 dark:text-gray-100",
+//           "shadow-sm focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:outline-none",
+//           "hover:border-gray-400 dark:hover:border-gray-500",
+//           "transition-all duration-200 ease-in-out",
+// "focus:ring-2 focus:ring-[#9853F9] focus:ring-inset ",
+// "dark:focus:ring-2 dark:focus:ring-[#9853F9] dark:focus:ring-inset",
 
-          className
-        )}
-      >
-        {children}
-      </select>
-    </div>
-  );
-};
+//           className
+//         )}
+//       >
+//         {children}
+//       </select>
+//     </div>
+//   );
+// };
 const FamilyDetail = ({onNext,onPrev}) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">

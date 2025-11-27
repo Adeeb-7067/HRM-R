@@ -16,7 +16,7 @@ const ForgotPassword = () => {
   return (
     <div className="flex w-full min-h-screen bg-[#E1DAFC]">
       {/* Left BG & Floating Card */}
-      <div className="w-full md:w-1/2 relative left-0 md:left-50 lg:left-75 flex justify-center items-center bg-[#E1DAFC]">
+      <div className="w-full md:w-1/2 relative left-0  md:left-50 lg:left-65 xl:left-90 flex justify-center items-center bg-[#E1DAFC]">
         <div className="absolute md:static top-10 md:top-0 mx-4 md:mx-0 bg-[#FFFFFF] drop-shadow-2xl  shadow-[#9376CA38] rounded-2xl w-full max-w-md md:max-w-xl p-6 md:pt-10 pb-[60px] z-10">
           <div className="flex flex-col mx-5 ">
             <div className="flex flex-col items-center">

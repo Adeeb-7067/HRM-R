@@ -83,7 +83,7 @@ const Calendar = ({ label, name, value, onChange }) => {
           key={day}
           onClick={() => handleDateSelect(day)}
           className={`h-8 w-8 flex items-center justify-center rounded-full cursor-pointer text-[0.75rem] transition-colors
-                     ${isSelected ? 'bg-blue-600 text-white' : isToday ? 'bg-blue-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100'}`}
+                     ${isSelected ? 'bg-purple-600 text-white' : isToday ? 'text-black' : 'hover:bg-purple-500 dark:hover:bg-purple-500 text-gray-900 dark:text-gray-100'}`}
         >
           {day}
         </div>
@@ -124,7 +124,7 @@ const Calendar = ({ label, name, value, onChange }) => {
   }, []);
 
   return (
-    <div className="flex flex-col space-y-1 w-full max-w-sm mx-auto">
+    <div className="flex flex-col space-y-1 w-full max-w-sm mx-auto cursor-pointer">
       {/* Label */}
       <label className="text-[0.7rem] font-semibold text-gray-500 dark:text-gray-200">
         {label || 'Date'}
@@ -158,18 +158,18 @@ const Calendar = ({ label, name, value, onChange }) => {
             <div className="flex items-center justify-between mb-3">
               <button
                 onClick={prevMonth}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors text-[0.8rem]"
+                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors text-[1rem]"
               >
                 &larr;
               </button>
               <div className="flex items-center space-x-2">
-                <span className="text-[0.8rem] font-semibold text-gray-900 dark:text-gray-100">
+                <span className="text-[0.8rem] font-semibold mt-0.5 text-gray-500 dark:text-gray-100">
                   {months[currentDate.getMonth()]}
                 </span>
                 <div className="relative">
                   <button
                     onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                    className="text-[0.8rem] font-semibold text-gray-900 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                    className="text-[0.8rem] font-semibold text-gray-500 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                   >
                     {currentDate.getFullYear()}
                   </button>
@@ -179,7 +179,7 @@ const Calendar = ({ label, name, value, onChange }) => {
                         <div
                           key={year}
                           onClick={() => selectYear(year)}
-                          className="px-3 py-1.5 text-[0.75rem] hover:bg-blue-100 dark:hover:bg-gray-700 cursor-pointer transition-colors text-gray-900 dark:text-gray-100"
+                          className="px-3 py-1.5 text-[0.75rem] hover:bg-purple-500 dark:hover:bg-gray-700 cursor-pointer transition-colors text-gray-900 dark:text-gray-100"
                         >
                           {year}
                         </div>
@@ -190,7 +190,7 @@ const Calendar = ({ label, name, value, onChange }) => {
               </div>
               <button
                 onClick={nextMonth}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors text-[0.8rem]"
+                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors  text-[1rem]"
               >
                 &rarr;
               </button>
