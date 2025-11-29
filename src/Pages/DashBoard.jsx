@@ -219,22 +219,25 @@ const DashBoard = () => {
   };
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
-  const StatsCard = ({ img, heading, data, color }) => {
+  const StatsCard = ({ title, img, heading1, heading2, data, color }) => {
     return (
       <div
-        className="w-full  md:w-[100%]   bg-white dark:bg-gray-800 border-t-4 rounded-lg drop-shadow-md p-4  h-25  transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+        className="w-full  md:w-[100%]   bg-white dark:bg-gray-800 border-t-4 rounded-lg drop-shadow-md py-1   px-4 h-30  transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
         style={{ borderTopColor: color }}
       >
+        <h2 className="text-[0.9rem] text-[#464549] font-bold mb-2 flex  ">{title}</h2>
         <div className="flex items-center gap-4">
+
           <div className="flex items-center gap-4 w-full">
-            <img src={img} alt={heading} className="w-8 h-8 mb-2" />
+            <img src={img} alt={heading1} className="w-8 h-8 mb-2" />
             <div className="">
+
               <h4 className="text-[10px]  xl:text-[0.7rem]  text-[#464549] dark:text-gray-400 font-semibold line-clamp-1">
-                {heading}
+                {heading1}
               </h4>
               <p className="text-[0.9rem] text-[#9376CA] font-bold">{data}</p>
               <h4 className="text-[10px]  xl:text-[0.7rem]  text-[#464549] dark:text-gray-400 font-semibold line-clamp-1">
-                {heading}
+                {heading2}
               </h4>
               <p className="text-[0.9rem] text-[#9376CA] font-bold">{data}</p>
             </div>
@@ -292,106 +295,129 @@ const DashBoard = () => {
     );
   };
 
- const Chart = () => (
-  <div className="w-full h-[220px] xl:h-[202px]">
-    <ResponsiveContainer width="100%" height="100%">
-      <PieChart>
-        <Pie
-          data={attendanceData}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label={CustomLabel}
-          outerRadius={100}
-          fill="#8884d8"
-          dataKey="value"
-        >
-          {attendanceData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        {/* Add Tooltip here */}
-      <Tooltip
-  formatter={(value, name, props) => [
-    `${value}`,
-    `${props.payload.name || props.payload.value}`,
-  ]}
-  contentStyle={{
-    backgroundColor: "#1F2937", // dark-gray background for modern look
-    color: "#F9FAFB", // light text for contrast
-    borderRadius: "8px",
-    padding: "8px 12px",
-    fontSize: "0.875rem", // slightly bigger
-    fontWeight: "500",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.15)", // subtle shadow
-    border: "1px solid #374151", // subtle border for depth
-    minWidth: "80px",
-    textAlign: "center",
-  }}
-  itemStyle={{
-    color: "#F9FAFB", // ensure item text is readable
-    margin: "2px 0",
-  }}
-/>
+  const Chart = () => (
+    <div className="w-full h-[220px] xl:h-[202px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={attendanceData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={CustomLabel}
+            outerRadius={100}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {attendanceData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          {/* Add Tooltip here */}
+          <Tooltip
+            formatter={(value, name, props) => [
+              `${value}`,
+              `${props.payload.name || props.payload.value}`,
+            ]}
+            contentStyle={{
+              backgroundColor: "#1F2937", // dark-gray background for modern look
+              color: "#F9FAFB", // light text for contrast
+              borderRadius: "8px",
+              padding: "8px 12px",
+              fontSize: "0.875rem", // slightly bigger
+              fontWeight: "500",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.15)", // subtle shadow
+              border: "1px solid #374151", // subtle border for depth
+              minWidth: "80px",
+              textAlign: "center",
+            }}
+            itemStyle={{
+              color: "#F9FAFB", // ensure item text is readable
+              margin: "2px 0",
+            }}
+          />
 
-      </PieChart>
-    </ResponsiveContainer>
-  </div>
-);
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
 
   const today = new Date();
-  const formatted = `${today.getDate()}-${
-    today.getMonth() + 1
-  }-${today.getFullYear()}`;
+  const formatted = `${today.getDate()}-${today.getMonth() + 1
+    }-${today.getFullYear()}`;
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4   ">
         <StatsCard
+          title={"Active Employees"}
           img={Stat01}
-          heading={"Total Employees"}
+          heading1={"New  Joiners"}
+          heading2={"Resigned Employees"}
+
           data={"400"}
           color={"#007AFF"}
         />
         <StatsCard
           img={Stat02}
-          heading={"Employees Present"}
+          title={"Statutory Applied"}
+          heading1={"Not  Applied"}
+          heading2={"PT Location Change"}
+
           data={"55/60"}
           color={"#34C759"}
         />
         <StatsCard
           img={Stat03}
-          heading={"On Leave Today"}
+          title={"Attendence Present"}
+          heading1={"On Leave "}
+          heading2={"Long Absentee"}
+
           data={"04"}
           color={"#FF3B30"}
         />
         <StatsCard
           img={Stat04}
-          heading={"Upcoming Birthdays"}
+          title={"Wishes Birthday"}
+          heading1={"New joiners"}
+          heading2={"Work Anniversary"}
+
           data={formatted}
           color={"#9376CA"}
         />
         <StatsCard
           img={Stat05}
-          heading={"Total Departments"}
+          title={"Total Investment"}
+          heading1={"New Regime"}
+          heading2={"Old Regime"}
+
           data={"24"}
           color={"#FFCC00"}
         />
         <StatsCard
           img={Stat06}
-          heading={"Open Positions"}
+          title={"Salary Change"}
+          heading1={"Increment"}
+          heading2={"Deduction"}
+
           data={"03"}
           color={"#17A2B8"}
         />
         <StatsCard
           img={Stat07}
-          heading={"Leave Requests"}
+          title={"Leave Requests"}
+          heading1={"Approved Leaves"}
+          heading2={"Declined Leaves"}
+
           data={"03"}
           color={"#6C757D"}
         />
         <StatsCard
           img={Stat08}
-          heading={"New Hires this month"}
+          title={"New Hires"}
+          heading1={"Onboarding"}
+          heading2={"Background Check"}
+
           data={"05"}
           color={""}
         />
@@ -456,15 +482,14 @@ const DashBoard = () => {
                   </td>
                   <td className="p-2 text-center flex justify-evenly ">
                     <button
-                      className={`px-6  w-fit  py-1 rounded-sm  text-center   ${
-                        item.daily_attendance === "Present"
-                          ? "text-[#34C759]  bg-[#34C75933]"
-                          : item.daily_attendance === "Leave"
+                      className={`px-6  w-fit  py-1 rounded-sm  text-center   ${item.daily_attendance === "Present"
+                        ? "text-[#34C759]  bg-[#34C75933]"
+                        : item.daily_attendance === "Leave"
                           ? "text-[#007BFF] bg-[#007BFF33]"
                           : item.daily_attendance === "Absent"
-                          ? "text-[#FF3B30]  bg-[#FF3B3033]"
-                          : "text-[#FF9800]  bg-[#FF980033]"
-                      }`}
+                            ? "text-[#FF3B30]  bg-[#FF3B3033]"
+                            : "text-[#FF9800]  bg-[#FF980033]"
+                        }`}
                     >
                       {item.daily_attendance}
                     </button>

@@ -25,27 +25,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 const EmployeList = () => {
-
-
-
-
-
   const [open, setOpen] = useState(false);
-  const [visibleFilters, setVisibleFilters] = useState({
-    unitName: false,
-    department: false,
-    location: false,
-    designation: false,
-    unit: false,
-    grade: false,
-    salaryBasis: false,
-    level: false,
-    presentDepartment: false,
-  })
-
-   
-  const [filterValues, setFilterValues] = useState({
+  
+  // Active filters that are currently applied to the table
+  const [activeFilters, setActiveFilters] = useState({
     unitName: "",
     department: "",
     location: "",
@@ -53,22 +38,35 @@ const EmployeList = () => {
     grade: "",
     level: "",
   });
-  //  useEffect(()=>{
 
+  // Which filters are visible in the UI (checkboxes)
+  const [activeVisibleFilters, setActiveVisibleFilters] = useState({
+    unitName: false,
+    department: false,
+    location: false,
+    designation: false,
+    grade: false,
+    level: false,
+  });
 
-  // },[visibleFilters]);
+  // Temporary states for the dropdown (not applied yet)
+  const [tempVisibleFilters, setTempVisibleFilters] = useState({
+    unitName: false,
+    department: false,
+    location: false,
+    designation: false,
+    grade: false,
+    level: false,
+  });
 
-
-  const handleFilterChange = (key, value) => {
-    setFilterValues((prev) => ({ ...prev, [key]: value }));
-
-  };
-
-  const handleRemoveFilter = (key) => {
-    setFilterValues((prev) => ({ ...prev, [key]: "" }));
-  };
-
-
+  const [tempFilterValues, setTempFilterValues] = useState({
+    unitName: "",
+    department: "",
+    location: "",
+    designation: "",
+    grade: "",
+    level: "",
+  });
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -119,6 +117,7 @@ const EmployeList = () => {
       profilePic: "https://i.pravatar.cc/102",
     },
   ];
+
   const filterOptions = [
     { key: "unitName", label: "Unit Name" },
     { key: "department", label: "Department" },
@@ -137,47 +136,110 @@ const EmployeList = () => {
     level: ["L1", "L2", "L3"],
   };
 
+  // Handle temporary changes in the dropdown (not applied yet)
+  const handleTempFilterChange = (key, value) => {
+    setTempFilterValues((prev) => ({ ...prev, [key]: value }));
+  };
 
+  // Handle temporary checkbox changes (not applied yet)
+  const handleTempCheckboxChange = (key, checked) => {
+    setTempVisibleFilters((prev) => ({ ...prev, [key]: checked }));
+    // If unchecking, also clear the temporary filter value
+    if (!checked) {
+      setTempFilterValues((prev) => ({ ...prev, [key]: "" }));
+    }
+  };
 
+  // Apply filters - copy all temporary states to active states
+  const handleApplyFilters = () => {
+    setActiveVisibleFilters({ ...tempVisibleFilters });
+    setActiveFilters({ ...tempFilterValues });
+    setOpen(false);
+  };
 
-  const filterData = employees.filter((item) =>
-    item.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())
-  );
+  // Reset filters - clear everything
+  const handleResetFilters = () => {
+    const resetValues = {
+      unitName: "",
+      department: "",
+      location: "",
+      designation: "",
+      grade: "",
+      level: "",
+    };
+    
+    const resetVisible = {
+      unitName: false,
+      department: false,
+      location: false,
+      designation: false,
+      grade: false,
+      level: false,
+    };
 
+    setTempFilterValues(resetValues);
+    setTempVisibleFilters(resetVisible);
+    setActiveFilters(resetValues);
+    setActiveVisibleFilters(resetVisible);
+  };
 
+  // Remove individual active filter
+  const handleRemoveFilter = (key) => {
+    setActiveFilters((prev) => ({ ...prev, [key]: "" }));
+    setActiveVisibleFilters((prev) => ({ ...prev, [key]: false }));
+  };
+
+  // Initialize temp states when dropdown opens
+  useEffect(() => {
+    if (open) {
+      setTempFilterValues({ ...activeFilters });
+      setTempVisibleFilters({ ...activeVisibleFilters });
+    }
+  }, [open]);
+
+  // Filter data based on search query and active filters
+  const filterData = employees.filter((item) => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Check if item matches all active filters
+    const matchesFilters = Object.entries(activeFilters).every(([key, value]) => {
+      if (!value) return true; // No filter applied for this field
+      
+      // For department filter, check if item's department includes the filter value
+      if (key === 'department') {
+        return item.department.toLowerCase().includes(value.toLowerCase());
+      }
+      
+      // For other filters, you might need to adjust based on your data structure
+      return String(item[key] || '').toLowerCase().includes(value.toLowerCase());
+    });
+    
+    return matchesSearch && matchesFilters;
+  });
+
+  // Render dropdowns based on ACTIVE visible filters (not temporary)
   const renderDropdown = (key, label) => {
-    if (!visibleFilters[key]) return null;
+    if (!activeVisibleFilters[key]) return null;
 
     return (
       <div className="flex flex-col">
-        {/* DROPDOWN */}
         <select
           className="border-2 px-2 py-1 rounded-4xl w-fit text-[0.7rem]"
-          value={filterValues[key]}
-          onChange={(e) => handleFilterChange(key, e.target.value)}
+          value={activeFilters[key]}
+          onChange={(e) => {
+            // This now directly updates active filters since dropdowns are outside the filter panel
+            setActiveFilters(prev => ({ ...prev, [key]: e.target.value }));
+          }}
         >
-          <option className="text-[0.7rem]" value=""> {label}</option>
-
+          <option className="text-[0.7rem]" value="">
+            {label}
+          </option>
           {dropdownData[key].map((item) => (
             <option className="text-[0.7rem]" key={item} value={item}>
               {item}
             </option>
           ))}
         </select>
-
-        {/* SELECTED TAG */}
-        {/* {filterValues[key] && (
-        <div className="text-sm font-normal flex justify-between items-center  p-2 w-fit rounded-sm gap-2 mt-2 bg-gray-200/60">
-          {filterValues[key]}
-
-          <span
-            onClick={() => handleRemoveFilter(key)}
-            className=" cursor-pointer text-xl leading-none "
-          >
-            ×
-          </span>
-        </div>
-      )} */}
       </div>
     );
   };
@@ -186,15 +248,6 @@ const EmployeList = () => {
     <div className="p-2 sm:p-4 ">
       {/* Top Actions */}
       <div className="flex flex-row sm:flex-row justify-between gap-3 mt-2 mb-8 w-full  ">
-        {/* Search Box
-        <div className="flex gap-2  rounded-sm px-2 items-center shadow drop-shadow-xs border border-gray-300  w-full xl:w-[455px] xl:h-[50px]">
-          <input
-            type="text"
-            placeholder="Search here"
-            className="px-3 py-2 w-full lg:w-90 xl:w-128 text-sm outline-none"
-          />
-          <IoMdSearch className="w-7 h-7" />
-        </div> */}
         <h1 className="text-xl sm:text-2xl font-semibold text-[#252C58] dark:text-gray-50 ">
           Employee List
         </h1>
@@ -212,6 +265,7 @@ const EmployeList = () => {
           </div>
         </div>
       </div>
+      
       <div className="grid grid-cols-2 md:flex  md:justify-around  gap-2 md:gap-2 w-full flex-wrap-reverse md:flex-nowrap">
         <div
           className="flex gap-2 rounded-sm px-3 items-center shadow drop-shadow-xs border border-gray-300 dark:border-gray-500 dark:bg-gray-800 w-full md:w-[70%] xl:h-[35px] 
@@ -228,7 +282,6 @@ const EmployeList = () => {
 
         <button
           onClick={() => setOpen(prev => !prev)}
-
           className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-xs md:text-[0.7rem] px-4 p-1 md:p-0  min-w-[50%]  md:min-w-[5rem]  rounded-sm flex items-center justify-center gap-1"
         >
           <HiAdjustmentsHorizontal className="md:w-4 md:h-4" />
@@ -238,31 +291,32 @@ const EmployeList = () => {
           <IoMdArrowDropup className="w-3 mt-0.5 h-3" />
           </>)}
         </button>
+        
         <button className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2 md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2">
           <CiImport className="md:w-4 md:h-4" />
           Bulk Export
         </button>
+        
         <button className="bg-[#8629DF]  dark:border dark:border-gray-500 text-white cursor-pointer text-[0.7rem] md:text-[0.7rem] px-4 p-2  md:p-0 min-w-full md:min-w-[8.5rem] rounded-sm flex items-center justify-center gap-2">
           <CiExport className="md:w-4 md:h-4" />
           Bulk Import
         </button>
       </div>
 
+      {/* Active Filter Dropdowns (shown based on ACTIVE visible filters) */}
       <div className="flex gap-4 flex-wrap my-4">
-
         {renderDropdown("unitName", "Unit")}
         {renderDropdown("department", "Department")}
         {renderDropdown("location", "Location")}
         {renderDropdown("designation", "Designation")}
         {renderDropdown("grade", "Grade")}
         {renderDropdown("level", "Level")}
-
       </div>
-
+      
+      {/* Active Filter Tags */}
       <div className="mt-4">
         <div className="flex flex-wrap gap-2 ">
-
-          {Object.entries(filterValues).map(([key, value]) => {
+          {Object.entries(activeFilters).map(([key, value]) => {
             if (!value) return null;
             return (
               <div
@@ -270,7 +324,6 @@ const EmployeList = () => {
                 className="bg-gray-200/60 px-3 py-1 rounded-sm text-xs flex items-center gap-2"
               >
                 <span className="font-semibold text-[0.7rem]">{value}</span>
-
                 <button
                   onClick={() => handleRemoveFilter(key)}
                   className="text-gray-700 hover:text-red-500 text-lg cursor-pointer leading-none"
@@ -280,18 +333,12 @@ const EmployeList = () => {
               </div>
             );
           })}
-
         </div>
-
       </div>
 
-
-
+      {/* Employee Table */}
       <div className="rounded-sm mt-5 shadow drop-shadow-xs  border border-gray-200 dark:border-gray-600">
-        {/* <h2 className="text-lg sm:text-[1.2rem] text-[#252C58] dark:text-gray-400 font-semibold mb-8">
-          List of Employee
-        </h2> */}
-        <div className="overflow-x-auto no-scrollbar  ">
+        <div className="overflow-x-auto no-scrollbar">
           <div
             className="text-[0.7rem] min-w-[1050px] sm:min-w-full sm:text-[0.8rem]  font-semibold text-white dark:text-gray-50 rounded-t-md  dark:border-gray-700 bg-[#8629DF] dark:bg-gray-900 py-1 px-4 min-h-[40px] "
             style={{
@@ -403,12 +450,10 @@ const EmployeList = () => {
         <div className="flex flex-col sm:flex-row justify-end items-center mt-6 mx-4 text-xs sm:text-sm text-gray-600 gap-3 flex-wrap">
           {/* Left: Pagination numbers */}
           <div className="flex items-center gap-2 flex-wrap">
-            {/* Back button (disabled) */}
             <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               &lt; Back
             </button>
 
-            {/* Page numbers */}
             {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
               <button
                 key={num}
@@ -421,15 +466,12 @@ const EmployeList = () => {
               </button>
             ))}
 
-            {/* Ellipsis */}
             <span className="px-2">...</span>
 
-            {/* Last page */}
             <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               25
             </button>
 
-            {/* Next button */}
             <button className="px-3 py-1 border rounded border-[#8629DF] hover:bg-[#8629DF] hover:text-white">
               Next &gt;
             </button>
@@ -447,177 +489,16 @@ const EmployeList = () => {
             </select>
           </div>
         </div>
+        
         {/* Footer */}
         <div className="flex justify-end w-full text-black dark:text-gray-400 text-xs sm:text-sm mt-3 p-4">
           1-50 of 125
         </div>
       </div>
 
+      {/* Filter Dropdown */}
       {open && (
-        // <div className="fixed inset-0 flex  justify-end top-0 right-0 z-50  ">
-        //   <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl  p-6 sm:px-10 py-[50px] relative overflow-y-auto  max-h-[752px]">
-        //     {/* Close button */}
-        //     <button
-        //       onClick={() => setOpen(false)}
-        //       className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-        //     >
-        //       ✕
-        //     </button>
-
-        //     {/* Heading */}
-        //     <h1 className="text-[20px]  text-[#58585A] font-bold mb-6 mt-4">
-        //       Employee Searching
-        //     </h1>
-
-        //     {/* Form Grid */}
-        //     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        //       {/* Unit Name */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Unit Name
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-[#9376CA] focus:border-[#9376CA]">
-        //           <option>Select All</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Department */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Department
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select Department</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Location */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Location
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select All</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Designation */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Designation
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select Designation</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Unit */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Unit
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select Unit</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Grade */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Grade
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select Grade</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Salary Basis */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Salary Basis
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select All</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Level */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Level
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>Select Level</option>
-        //         </select>
-        //       </div>
-
-        //       {/* Present Department */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           Present Department
-        //         </label>
-        //         <select className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm">
-        //           <option>All</option>
-        //         </select>
-        //       </div>
-
-        //       {/* EMP Code */}
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           EMP Code
-        //         </label>
-        //         <input
-        //           type="text"
-        //           className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm"
-        //         />
-        //       </div>
-
-        //       {/* Name Switch + Input */}
-        //       <div>
-        //         <div className="flex rounded-4xl overflow-hidden border-2 border-gray-200 p-1 w-full mt-4 ">
-        //           <button className="px-6 py-2 w-1/2 rounded-4xl bg-[#9376CA] text-white text-sm font-medium">
-        //             First Name
-        //           </button>
-        //           <button className="px-6 py-2 w-1/2 rounded-4xl text-gray-600 text-sm font-medium">
-        //             Last Name
-        //           </button>
-        //         </div>
-        //       </div>
-
-        //       <div>
-        //         <label className="block text-sm font-medium text-gray-700 mb-1">
-        //           EMP Name
-        //         </label>
-        //         <input
-        //           type="text"
-        //           placeholder=""
-        //           className="flex-1 border border-gray-300 rounded-md py-2 px-3 text-sm w-full"
-        //         />
-        //         <div className=" flex gap-3 mt-3">
-        //           <input
-        //             type="checkbox"
-        //             id="finalized"
-        //             className="w-4 h-4 mt-1"
-        //           />
-        //           <label htmlFor="finalized" className="text-md text-gray-700">
-        //             Finalized Employee
-        //           </label>
-        //         </div>
-        //       </div>
-        //     </div>
-
-        //     {/* Action Buttons */}
-        //     <div className="mt-6 flex flex-col sm:flex-row justify-end gap-3">
-        //       <button className="flex items-center justify-center gap-2 bg-[#9376CA] text-white px-5 py-2 rounded-md shadow hover:bg-[#7a5fb8]">
-        //         <img src={SearchIcon} className="w-5 h-5" /> Search
-        //       </button>
-        //       <button className="flex items-center justify-center gap-2 bg-[#E5E7EB] border border-gray-300 px-5 py-2 rounded-md shadow text-gray-700 hover:bg-gray-100">
-        //         <LuRefreshCw /> Reset
-        //       </button>
-        //     </div>
-        //   </div>
-        // </div>
-        <div className="fixed inset-0 flex   justify-end top-55 right-5 z-50 overflow-auto no-scrollbar ">
+        <div className="fixed inset-0 flex justify-end top-55 right-5 z-50 overflow-auto no-scrollbar ">
           <div className="bg-white rounded-xs shadow-xl w-full max-w-xs p-6 overflow-y-auto h-[550px]">
             <button
               onClick={() => setOpen(false)}
@@ -626,9 +507,7 @@ const EmployeList = () => {
               ✕
             </button>
 
-
             <h2 className="text-lg font-semibold text-gray-700 mb-3">Filter</h2>
-
 
             <div className="space-y-2 border-b pb-4">
               {filterOptions.map((f) => (
@@ -636,50 +515,48 @@ const EmployeList = () => {
                   <input
                     type="checkbox"
                     className="w-4 h-4 accent-[#9376CA]"
-                    checked={visibleFilters[f.key]}
-                    onChange={(e) =>{
-
-                      setVisibleFilters(prev => ({ ...prev, [f.key]: e.target.checked }))
-                      if(e.target.checked ===false){
-                        handleRemoveFilter(f.key)
-                      }
-                      
-                    }
-                    }
+                    checked={tempVisibleFilters[f.key]}
+                    onChange={(e) => handleTempCheckboxChange(f.key, e.target.checked)}
                   />
                   {f.label}
                 </label>
               ))}
-
-
             </div>
 
-
-            {/* EMP Info */}
-            <h2 className="text-lg font-semibold text-gray-700 mt-4 mb-3">EMP Info</h2>
-
-            {/* 
-            <div className="space-y-2 border-b pb-4">
-              {[
-                "EMP Code",
-                "EMP Full Name",
-              ].map((item) => (
-                <label key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                  <input type="checkbox" className="w-4 h-4 accent-[#9376CA]" defaultChecked />
-                  {item}
-                </label>
-              ))}
+            {/* Filter Dropdowns (TEMPORARY - shown based on TEMP visible filters) */}
+            {/* <div className="mt-4 space-y-3">
+              {filterOptions.map((f) => 
+                tempVisibleFilters[f.key] && (
+                  <div key={f.key} className="space-y-1">
+                    <label className="text-sm font-medium text-gray-700">{f.label}</label>
+                    <select
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      value={tempFilterValues[f.key]}
+                      onChange={(e) => handleTempFilterChange(f.key, e.target.value)}
+                    >
+                      <option value="">Select {f.label}</option>
+                      {dropdownData[f.key].map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )
+              )}
             </div> */}
-
-
-            {/* Buttons */}
             <div className="mt-6 flex flex-col gap-3">
-              <button className="flex items-center justify-center gap-2 bg-[#9376CA] text-white px-5 py-2 rounded-md shadow hover:bg-[#7a5fb8]">
-                <img src={SearchIcon} className="w-5 h-5" /> Applied
+              <button 
+                onClick={handleApplyFilters}
+                className="flex items-center justify-center gap-2 bg-[#9376CA] text-white px-5 py-2 rounded-md shadow hover:bg-[#7a5fb8]"
+              >
+                <img src={SearchIcon} className="w-5 h-5" /> Apply
               </button>
 
-
-              <button className="flex items-center justify-center gap-2 bg-gray-200 border px-5 py-2 rounded-md shadow text-gray-700 hover:bg-gray-300">
+              <button 
+                onClick={handleResetFilters}
+                className="flex items-center justify-center gap-2 bg-gray-200 border px-5 py-2 rounded-md shadow text-gray-700 hover:bg-gray-300"
+              >
                 <LuRefreshCw /> Reset
               </button>
             </div>
